@@ -1,11 +1,13 @@
 import AuthComponent from "./components/auth.js";
 import JoinGameComponent from "./components/join_game.js";
 import GameService from "./game_service.js";
+import MessageHandler from "./message_handler.js";
 import SocketService from "./socket_service.js";
 import StateStore from "./state_store.js";
+const messageHandler = new MessageHandler();
 const socketService = new SocketService();
 socketService.connect("ws://localhost:8765");
-socketService.onMessage((message) => { console.log(message); });
+socketService.onMessage((message) => { messageHandler.handle(message); });
 const stateStore = new StateStore();
 const gameService = new GameService(socketService, stateStore);
 const authComponent = new AuthComponent(stateStore);
