@@ -1,4 +1,4 @@
-import { ErrorPayload, Message, PlayerJoinedPayload, SharedViewPayload } from "./message";
+import { ErrorPayload, Message, PlayerJoinedPayload, PrivateView, PrivateViewPayload, SharedViewPayload } from "./message";
 import { SharedGameState } from "./state";
 import StateStore from "./state_store";
 
@@ -17,6 +17,10 @@ export default class MessageHandler {
                 const payload = message.payload as SharedViewPayload;
                 this.handleSharedGameState(payload.sharedView);
             }
+            else if (message.payload.privateView) {
+                const payload = message.payload as PrivateViewPayload;
+                this.handlePrivateGameState(payload.privateView);
+            }
         }
     }
 
@@ -31,5 +35,9 @@ export default class MessageHandler {
 
     private handleSharedGameState(sharedGameState: SharedGameState) {
         this.stateStore.update((state) => ({ ...state, sharedGameState }));
+    }
+
+    private handlePrivateGameState(privateView: PrivateView) {
+        this.stateStore.update((state) => ({ ...state, myCards: privateView.cards }));
     }
 }

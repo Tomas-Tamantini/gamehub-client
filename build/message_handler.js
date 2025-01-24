@@ -14,6 +14,10 @@ export default class MessageHandler {
                 const payload = message.payload;
                 this.handleSharedGameState(payload.sharedView);
             }
+            else if (message.payload.privateView) {
+                const payload = message.payload;
+                this.handlePrivateGameState(payload.privateView);
+            }
         }
     }
     handlePlayerJoined(payload) {
@@ -25,5 +29,8 @@ export default class MessageHandler {
     }
     handleSharedGameState(sharedGameState) {
         this.stateStore.update((state) => (Object.assign(Object.assign({}, state), { sharedGameState })));
+    }
+    handlePrivateGameState(privateView) {
+        this.stateStore.update((state) => (Object.assign(Object.assign({}, state), { myCards: privateView.cards })));
     }
 }

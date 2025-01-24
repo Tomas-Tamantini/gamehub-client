@@ -1,3 +1,5 @@
+import { Card } from "./card";
+
 export enum GameStatus {
     START_GAME = "START_GAME",
     START_MATCH = "START_MATCH",
@@ -29,4 +31,5 @@ export interface GlobalState {
     roomId?: number;
     alertMsg?: string;
     sharedGameState?: SharedGameState;
+    myCards?: Card[];
 }

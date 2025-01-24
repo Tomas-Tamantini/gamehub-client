@@ -1,4 +1,5 @@
-import { SharedGameState } from "./state";
+import { Card } from "./card";
+import { SharedGameState, GameStatus } from "./state";
 
 export interface Message {
     messageType: "ERROR" | "PLAYER_JOINED" | "GAME_STATE";
@@ -17,4 +18,14 @@ export interface ErrorPayload {
 export interface SharedViewPayload {
     roomId: number;
     sharedView: SharedGameState;
+}
+
+export interface PrivateView {
+    status: GameStatus;
+    cards: Card[];
+}
+
+export interface PrivateViewPayload {
+    roomId: number;
+    privateView: PrivateView;
 }

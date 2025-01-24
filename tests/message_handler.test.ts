@@ -57,5 +57,16 @@ describe('MessageHandler', () => {
             const updatedState = stateStore.getState();
             expect(updatedState.sharedGameState).toEqual(payload.sharedView);
         })
+
+        it('should update private game state', () => {
+            const cards = [{ rank: '3', suit: 'd' }];
+            const payload = {
+                roomId: 123,
+                privateView: { status: "DEAL_CARDS", cards }
+            }
+            messageHandler.handle({ messageType: 'GAME_STATE', payload });
+            const updatedState = stateStore.getState();
+            expect(updatedState.myCards).toEqual(cards);
+        })
     });
 });
