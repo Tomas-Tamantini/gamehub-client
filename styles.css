@@ -67,3 +67,46 @@ button:active {
     justify-content: center;
     align-items: center;
 }
+
+.table-left {
+    position: absolute;
+    top: 50%;
+    left: 2%;
+    transform: translateY(-50%);
+}
+
+.table-right {
+    position: absolute;
+    top: 50%;
+    right: 2%;
+    transform: translateY(-50%);
+}
+
+.table-top {
+    position: absolute;
+    top: 2%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.table-bottom {
+    position: absolute;
+    bottom: 2%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30px;
+    height: 50px;
+    border-radius: 5px;
+    border: 1px solid #000;
+    user-select: none;
+}
+
+.card.card-back {
+    background-color: blue;
+}
