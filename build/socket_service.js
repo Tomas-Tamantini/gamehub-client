@@ -2,6 +2,10 @@ export default class SocketService {
     onMessage(callback) {
         this.callbackOnMessage = callback;
     }
+    send(data) {
+        var _a;
+        (_a = this.ws) === null || _a === void 0 ? void 0 : _a.send(JSON.stringify(data));
+    }
     connect(url) {
         try {
             this.ws = new WebSocket(url);

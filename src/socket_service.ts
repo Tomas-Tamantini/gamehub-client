@@ -1,9 +1,13 @@
 export default class SocketService {
-    ws?: WebSocket;
-    callbackOnMessage?: (data: any) => void;
+    private ws?: WebSocket;
+    private callbackOnMessage?: (data: any) => void;
 
     public onMessage(callback: (data: object) => void) {
         this.callbackOnMessage = callback;
+    }
+
+    public send(data: object) {
+        this.ws?.send(JSON.stringify(data));
     }
 
     public connect(url: string) {

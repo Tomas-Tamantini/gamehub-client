@@ -32,3 +32,7 @@ button:hover {
 button:active {
     background-color: #004b9a;
 }
+
+.hidden {
+    display: none;
+}

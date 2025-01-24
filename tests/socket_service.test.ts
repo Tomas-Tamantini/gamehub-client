@@ -8,6 +8,7 @@ describe('SocketService', () => {
         socketService = new SocketService();
         mockWebSocket = {
             onmessage: jest.fn(),
+            send: jest.fn(),
         } as any;
         global.WebSocket = jest.fn(() => mockWebSocket) as any;
         socketService = new SocketService();
@@ -16,6 +17,11 @@ describe('SocketService', () => {
 
     it('should connect to the given url', () => {
         expect(global.WebSocket).toHaveBeenCalledWith('ws://localhost:3000');
+    });
+
+    it('should send message to given url', () => {
+        socketService.send({ message: 'Hello' });
+        expect(mockWebSocket.send).toHaveBeenCalledWith(JSON.stringify({ message: 'Hello' }));
     });
 
     it('should send parsed message to subscribed callback', () => {
