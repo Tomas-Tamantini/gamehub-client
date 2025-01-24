@@ -34,7 +34,12 @@ export default class MessageHandler {
     }
 
     private handleSharedGameState(sharedGameState: SharedGameState) {
-        this.stateStore.update((state) => ({ ...state, sharedGameState, alertMsg: undefined }));
+        let alertMsg: string | undefined = undefined;
+        if (sharedGameState.result) {
+            alertMsg = `Game over. Results: ${sharedGameState.result?.players.map(p => `${p.playerId}: ${p.distToAvg}`).join(' / ')}`;
+        }
+        const myCards = sharedGameState.status == "UPDATE_POINTS" ? [] : this.stateStore.getState().myCards;
+        this.stateStore.update((state) => ({ ...state, sharedGameState, alertMsg, myCards }));
     }
 
     private handlePrivateGameState(privateView: PrivateView) {

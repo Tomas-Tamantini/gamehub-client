@@ -28,7 +28,13 @@ export default class MessageHandler {
         this.stateStore.update((state) => (Object.assign(Object.assign({}, state), { alertMsg: `Error: ${payload.error}` })));
     }
     handleSharedGameState(sharedGameState) {
-        this.stateStore.update((state) => (Object.assign(Object.assign({}, state), { sharedGameState, alertMsg: undefined })));
+        var _a;
+        let alertMsg = undefined;
+        if (sharedGameState.result) {
+            alertMsg = `Game over. Results: ${(_a = sharedGameState.result) === null || _a === void 0 ? void 0 : _a.players.map(p => `${p.playerId}: ${p.distToAvg}`).join(' / ')}`;
+        }
+        const myCards = sharedGameState.status == "UPDATE_POINTS" ? [] : this.stateStore.getState().myCards;
+        this.stateStore.update((state) => (Object.assign(Object.assign({}, state), { sharedGameState, alertMsg, myCards })));
     }
     handlePrivateGameState(privateView) {
         this.stateStore.update((state) => (Object.assign(Object.assign({}, state), { myCards: privateView.cards, alertMsg: undefined, selectedCards: [] })));
