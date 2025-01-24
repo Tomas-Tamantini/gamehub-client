@@ -25,7 +25,7 @@ export default class MessageHandler {
         this.stateStore.update((state) => (Object.assign(Object.assign({}, state), { alertMsg, roomId: payload.roomId })));
     }
     handleErrorMessage(payload) {
-        this.stateStore.update((state) => (Object.assign(Object.assign({}, state), { alertMsg: `Error: ${payload.error}` })));
+        this.stateStore.update((state) => (Object.assign(Object.assign({}, state), { alertMsg: `Error: ${payload.error}`, selectedCards: [] })));
     }
     handleSharedGameState(sharedGameState) {
         var _a;

@@ -30,7 +30,7 @@ export default class MessageHandler {
     }
 
     private handleErrorMessage(payload: ErrorPayload) {
-        this.stateStore.update((state) => ({ ...state, alertMsg: `Error: ${payload.error}` }));
+        this.stateStore.update((state) => ({ ...state, alertMsg: `Error: ${payload.error}`, selectedCards: [] }));
     }
 
     private handleSharedGameState(sharedGameState: SharedGameState) {
