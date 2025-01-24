@@ -1,11 +1,14 @@
-import { Message, PlayerJoinedPayload } from "./message";
+import { ErrorPayload, Message, PlayerJoinedPayload } from "./message";
 import StateStore from "./state_store";
 
 export default class MessageHandler {
     constructor(private stateStore: StateStore) { }
 
     handle(message: Message) {
-        if (message.messageType === "PLAYER_JOINED") {
+        if (message.messageType === "ERROR") {
+            this.handleErrorMessage(message.payload as ErrorPayload);
+        }
+        else if (message.messageType === "PLAYER_JOINED") {
             this.handlePlayerJoined(message.payload as PlayerJoinedPayload);
         }
     }
@@ -13,5 +16,9 @@ export default class MessageHandler {
     private handlePlayerJoined(payload: PlayerJoinedPayload) {
         const alertMsg = `Players in room: ${payload.playerIds.join(", ")}`;
         this.stateStore.update((state) => ({ ...state, alertMsg, roomId: payload.roomId }));
+    }
+
+    private handleErrorMessage(payload: ErrorPayload) {
+        this.stateStore.update((state) => ({ ...state, alertMsg: `Error: ${payload.error}` }));
     }
 }

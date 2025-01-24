@@ -1,6 +1,5 @@
 import MessageHandler from '../src/message_handler';
 import StateStore from '../src/state_store';
-import { Message, PlayerJoinedPayload } from '../src/message';
 import State from '../src/state';
 
 describe('MessageHandler', () => {
@@ -18,16 +17,11 @@ describe('MessageHandler', () => {
         let updatedState: State;
 
         beforeEach(() => {
-            const payload: PlayerJoinedPayload = {
+            const payload = {
                 playerIds: ['player1', 'player2'],
                 roomId: 123,
             };
-            const message: Message = {
-                messageType: 'PLAYER_JOINED',
-                payload,
-            };
-
-            messageHandler.handle(message);
+            messageHandler.handle({ messageType: 'PLAYER_JOINED', payload });
             updatedState = stateStore.getState();
         });
 
@@ -44,4 +38,12 @@ describe('MessageHandler', () => {
         });
     });
 
+    describe('handle ERROR message', () => {
+        it('should update alert message', () => {
+            const payload = { error: 'Some error' };
+            messageHandler.handle({ messageType: 'ERROR', payload });
+            const updatedState = stateStore.getState();
+            expect(updatedState.alertMsg).toEqual('Error: Some error');
+        });
+    });
 });
