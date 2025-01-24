@@ -9,6 +9,9 @@ describe("StateStore", () => {
         stateStore.update(() => ({ playerId: "Alice" }));
     });
 
+    it("should expose current state", () => {
+        expect(stateStore.getState()).toEqual({ playerId: "Alice" });
+    });
 
     it("should notify a subscriber with the current state upon subscription", () => {
         const mockSubscriber = { update: jest.fn() };

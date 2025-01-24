@@ -1,23 +1,16 @@
-import State from "./state";
-
-interface Subscriber {
-    update: (state: State) => void;
-}
-
 export default class StateStore {
-    private state: State = {};
-    private subscribers: Subscriber[] = [];
-
-    subscribe(subscriber: Subscriber) {
+    constructor() {
+        this.state = {};
+        this.subscribers = [];
+    }
+    subscribe(subscriber) {
         this.subscribers.push(subscriber);
         subscriber.update(this.state);
     }
-
-    update(updateFn: (state: State) => State) {
+    update(updateFn) {
         this.state = updateFn(this.state);
         this.subscribers.forEach(subscriber => subscriber.update(this.state));
     }
-
     getState() {
         return this.state;
     }
