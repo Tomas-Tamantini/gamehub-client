@@ -83,7 +83,7 @@ export default class MyInfoComponent {
             });
         }
         const history = (_c = state.sharedGameState) === null || _c === void 0 ? void 0 : _c.moveHistory;
-        const myLastMove = history === null || history === void 0 ? void 0 : history.reverse().find(m => m.playerId === state.playerId);
+        const myLastMove = history === null || history === void 0 ? void 0 : history.filter(m => m.playerId === state.playerId).pop();
         if (myLastMove) {
             if (myLastMove.cards.length === 0) {
                 if (this.myHistoryContainer) {

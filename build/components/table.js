@@ -31,7 +31,7 @@ export default class TableComponent {
                 const offset = (idx - myIdx + players.length) % players.length;
                 if (offset != 0) {
                     const isTheirTurn = ((_a = state.sharedGameState) === null || _a === void 0 ? void 0 : _a.currentPlayerId) === player.playerId;
-                    const lastMove = (_b = state.sharedGameState) === null || _b === void 0 ? void 0 : _b.moveHistory.reverse().find(m => m.playerId === player.playerId);
+                    const lastMove = (_b = state.sharedGameState) === null || _b === void 0 ? void 0 : _b.moveHistory.filter(m => m.playerId === player.playerId).pop();
                     const opp = createOpponentComponent(player, this.offsetToPosition(offset), isTheirTurn, lastMove);
                     (_c = this.table) === null || _c === void 0 ? void 0 : _c.appendChild(opp);
                 }

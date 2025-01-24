@@ -83,7 +83,7 @@ export default class MyInfoComponent {
         }
 
         const history = state.sharedGameState?.moveHistory;
-        const myLastMove = history?.reverse().find(m => m.playerId === state.playerId);
+        const myLastMove = history?.filter(m => m.playerId === state.playerId).pop();
         if (myLastMove) {
             if (myLastMove.cards.length === 0) {
                 if (this.myHistoryContainer) {
