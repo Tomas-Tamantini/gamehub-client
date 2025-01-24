@@ -1,11 +1,11 @@
-import State from "./state";
+import { GlobalState } from "./state";
 
 interface Subscriber {
-    update: (state: State) => void;
+    update: (state: GlobalState) => void;
 }
 
 export default class StateStore {
-    private state: State = {};
+    private state: GlobalState = {};
     private subscribers: Subscriber[] = [];
 
     subscribe(subscriber: Subscriber) {
@@ -13,7 +13,7 @@ export default class StateStore {
         subscriber.update(this.state);
     }
 
-    update(updateFn: (state: State) => State) {
+    update(updateFn: (state: GlobalState) => GlobalState) {
         this.state = updateFn(this.state);
         this.subscribers.forEach(subscriber => subscriber.update(this.state));
     }

@@ -1,5 +1,4 @@
 import StateStore from "../src/state_store"
-import State from "../src/state"
 
 describe("StateStore", () => {
     let stateStore: StateStore;

@@ -1,5 +1,5 @@
 import GameService from "../game_service";
-import State from "../state";
+import { GlobalState } from "../state";
 
 export default class JoinGameComponent {
     private joinBtn = document.getElementById('join-btn');
@@ -12,7 +12,7 @@ export default class JoinGameComponent {
         this.gameService.joinGame();
     }
 
-    public update(state: State) {
+    public update(state: GlobalState) {
         if (state.playerId && !state.roomId) {
             this.joinBtn?.classList.remove('hidden');
         }

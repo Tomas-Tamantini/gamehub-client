@@ -1,4 +1,4 @@
-import State from "../state";
+import { GlobalState } from "../state";
 import StateStore from "../state_store";
 
 export default class AuthComponent {
@@ -9,7 +9,7 @@ export default class AuthComponent {
         this.authBtn?.addEventListener('click', this.onAuthBtnClick.bind(this));
     }
 
-    public update(state: State) {
+    public update(state: GlobalState) {
         if (this.playerIdSpan) {
             this.playerIdSpan.innerText = state.playerId ? state.playerId : "";
         }
@@ -21,14 +21,14 @@ export default class AuthComponent {
     private onAuthBtnClick() {
         if (this.stateStore.getState().playerId) {
             this.stateStore.update(
-                (state: State) => ({ ...state, playerId: "" })
+                (state: GlobalState) => ({ ...state, playerId: "" })
             )
         }
         else {
             const playerId = prompt("Enter your player ID");
             if (playerId) {
                 this.stateStore.update(
-                    (state: State) => ({ ...state, playerId })
+                    (state: GlobalState) => ({ ...state, playerId })
                 )
             }
         }

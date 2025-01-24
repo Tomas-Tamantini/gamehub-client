@@ -1,4 +1,5 @@
-import { ErrorPayload, Message, PlayerJoinedPayload } from "./message";
+import { ErrorPayload, Message, PlayerJoinedPayload, SharedViewPayload } from "./message";
+import { SharedGameState } from "./state";
 import StateStore from "./state_store";
 
 export default class MessageHandler {
@@ -11,6 +12,12 @@ export default class MessageHandler {
         else if (message.messageType === "PLAYER_JOINED") {
             this.handlePlayerJoined(message.payload as PlayerJoinedPayload);
         }
+        else if (message.messageType === "GAME_STATE") {
+            if (message.payload.sharedView) {
+                const payload = message.payload as SharedViewPayload;
+                this.handleSharedGameState(payload.sharedView);
+            }
+        }
     }
 
     private handlePlayerJoined(payload: PlayerJoinedPayload) {
@@ -20,5 +27,9 @@ export default class MessageHandler {
 
     private handleErrorMessage(payload: ErrorPayload) {
         this.stateStore.update((state) => ({ ...state, alertMsg: `Error: ${payload.error}` }));
+    }
+
+    private handleSharedGameState(sharedGameState: SharedGameState) {
+        this.stateStore.update((state) => ({ ...state, sharedGameState }));
     }
 }

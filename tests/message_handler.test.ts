@@ -1,11 +1,11 @@
 import MessageHandler from '../src/message_handler';
 import StateStore from '../src/state_store';
-import State from '../src/state';
+import { GlobalState } from '../src/state';
 
 describe('MessageHandler', () => {
     let stateStore: StateStore;
     let messageHandler: MessageHandler;
-    const initialState: State = { playerId: 'Alice' };
+    const initialState: GlobalState = { playerId: 'Alice' };
 
     beforeEach(() => {
         stateStore = new StateStore();
@@ -14,7 +14,7 @@ describe('MessageHandler', () => {
     });
 
     describe('handle PLAYER_JOINED message', () => {
-        let updatedState: State;
+        let updatedState: GlobalState;
 
         beforeEach(() => {
             const payload = {
@@ -45,5 +45,17 @@ describe('MessageHandler', () => {
             const updatedState = stateStore.getState();
             expect(updatedState.alertMsg).toEqual('Error: Some error');
         });
+    });
+
+    describe('handle GAME_STATE message', () => {
+        it('should update shared game state', () => {
+            const payload = {
+                roomId: 123,
+                sharedView: { status: "START_GAME" }
+            }
+            messageHandler.handle({ messageType: 'GAME_STATE', payload });
+            const updatedState = stateStore.getState();
+            expect(updatedState.sharedGameState).toEqual(payload.sharedView);
+        })
     });
 });

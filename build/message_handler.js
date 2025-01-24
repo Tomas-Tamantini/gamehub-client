@@ -9,6 +9,12 @@ export default class MessageHandler {
         else if (message.messageType === "PLAYER_JOINED") {
             this.handlePlayerJoined(message.payload);
         }
+        else if (message.messageType === "GAME_STATE") {
+            if (message.payload.sharedView) {
+                const payload = message.payload;
+                this.handleSharedGameState(payload.sharedView);
+            }
+        }
     }
     handlePlayerJoined(payload) {
         const alertMsg = `Players in room: ${payload.playerIds.join(", ")}`;
@@ -16,5 +22,8 @@ export default class MessageHandler {
     }
     handleErrorMessage(payload) {
         this.stateStore.update((state) => (Object.assign(Object.assign({}, state), { alertMsg: `Error: ${payload.error}` })));
+    }
+    handleSharedGameState(sharedGameState) {
+        this.stateStore.update((state) => (Object.assign(Object.assign({}, state), { sharedGameState })));
     }
 }
