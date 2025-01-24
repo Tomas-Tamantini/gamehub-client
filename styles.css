@@ -68,35 +68,54 @@ button:active {
     align-items: center;
 }
 
-.table-left {
+.dealer-token {
+    width: 15px;
+    height: 15px;
+    background-color: red;
+    border: 2px solid #000;
+    border-radius: 50%;
+}
+
+.opponent-info {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    justify-content: center;
+    align-items: center;
+}
+
+.opponent.left {
     position: absolute;
     top: 50%;
     left: 2%;
     transform: translateY(-50%);
 }
 
-.table-right {
+.opponent.right {
     position: absolute;
     top: 50%;
     right: 2%;
     transform: translateY(-50%);
 }
 
-.table-top {
+.opponent.top {
     position: absolute;
     top: 2%;
     left: 50%;
     transform: translateX(-50%);
 }
 
-.table-bottom {
+.player-status {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.player-info {
     position: absolute;
     bottom: 20%;
     left: 50%;
     transform: translateX(-50%);
-}
-
-.player-info {
     display: flex;
     flex-direction: column;
     gap: 10px;

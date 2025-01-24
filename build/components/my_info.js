@@ -2,6 +2,7 @@ export default class MyInfoComponent {
     constructor() {
         this.myInfoSpan = document.getElementById('my-info');
         this.myCardsContainer = document.getElementById('my-cards');
+        this.myDealerToken = document.getElementById('my-dealer-token');
     }
     reset() {
         var _a;
@@ -10,13 +11,15 @@ export default class MyInfoComponent {
         while ((_a = this.myCardsContainer) === null || _a === void 0 ? void 0 : _a.firstChild) {
             this.myCardsContainer.removeChild(this.myCardsContainer.firstChild);
         }
+        if (this.myDealerToken)
+            this.myDealerToken.style.display = 'none';
     }
     cardToStr(card) {
         const suitSymbols = { 'd': '♦', 'c': '♣', 'h': '♥', 's': '♠' };
         return `${card.rank}${suitSymbols[card.suit]}`;
     }
     update(state) {
-        var _a;
+        var _a, _b;
         this.reset();
         const me = (_a = state.sharedGameState) === null || _a === void 0 ? void 0 : _a.players.find(p => p.playerId === state.playerId);
         if (!me)
@@ -24,6 +27,10 @@ export default class MyInfoComponent {
         const text = `${me.playerId} - ${me.numPoints}pts`;
         if (this.myInfoSpan)
             this.myInfoSpan.innerHTML = text;
+        if (((_b = state.sharedGameState) === null || _b === void 0 ? void 0 : _b.currentPlayerId) === state.playerId) {
+            if (this.myDealerToken)
+                this.myDealerToken.style.display = 'block';
+        }
         const cards = state.myCards;
         if (cards) {
             cards.forEach(card => {

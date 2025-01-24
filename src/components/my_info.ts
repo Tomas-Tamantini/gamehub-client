@@ -4,12 +4,14 @@ import { GlobalState } from "../state";
 export default class MyInfoComponent {
     private myInfoSpan = document.getElementById('my-info');
     private myCardsContainer = document.getElementById('my-cards');
+    private myDealerToken = document.getElementById('my-dealer-token');
 
     private reset() {
         if (this.myInfoSpan) this.myInfoSpan.innerHTML = '';
         while (this.myCardsContainer?.firstChild) {
             this.myCardsContainer.removeChild(this.myCardsContainer.firstChild);
         }
+        if (this.myDealerToken) this.myDealerToken.style.display = 'none';
     }
 
     private cardToStr(card: Card) {
@@ -23,6 +25,9 @@ export default class MyInfoComponent {
         if (!me) return;
         const text = `${me.playerId} - ${me.numPoints}pts`;
         if (this.myInfoSpan) this.myInfoSpan.innerHTML = text;
+        if (state.sharedGameState?.currentPlayerId === state.playerId) {
+            if (this.myDealerToken) this.myDealerToken.style.display = 'block';
+        }
         const cards = state.myCards;
         if (cards) {
             cards.forEach(card => {

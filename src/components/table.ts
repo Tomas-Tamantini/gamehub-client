@@ -10,10 +10,11 @@ export default class TableComponent {
         }
     }
 
-    private opponentPosition(offset: number): 'table-top' | 'table-left' | 'table-right' {
-        if (offset === 1) return 'table-left';
-        if (offset === 2) return 'table-top';
-        if (offset === 3) return 'table-right';
+    private offsetToPosition(offset: number): 'top' | 'left' | 'right' | 'bottom' {
+        if (offset === 0) return 'bottom';
+        else if (offset === 1) return 'left';
+        else if (offset === 2) return 'top';
+        else if (offset === 3) return 'right';
         throw new Error(`Invalid offset: ${offset}`);
     }
 
@@ -25,7 +26,8 @@ export default class TableComponent {
             players.forEach((player, idx) => {
                 const offset = (idx - myIdx + players.length) % players.length;
                 if (offset != 0) {
-                    const opp = createOpponentComponent(player, this.opponentPosition(offset));
+                    const isTheirTurn = state.sharedGameState?.currentPlayerId === player.playerId;
+                    const opp = createOpponentComponent(player, this.offsetToPosition(offset), isTheirTurn);
                     this.table?.appendChild(opp);
                 }
             });
