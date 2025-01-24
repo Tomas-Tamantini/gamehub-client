@@ -1,6 +1,9 @@
 body {
     margin: 0;
     font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
 }
 
 .toolbar {
@@ -35,4 +38,25 @@ button:active {
 
 .hidden {
     display: none;
+}
+
+.game-area {
+    background-color: #228B22;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+}
+
+.game-table {
+    position: relative;
+    width: 80%;
+    height: 80%;
+    background-color: #006400;
+    border: 3px solid #012e01;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
