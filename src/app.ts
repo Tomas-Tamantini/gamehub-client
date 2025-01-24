@@ -13,7 +13,8 @@ const stateStore = new StateStore();
 const messageHandler = new MessageHandler(stateStore);
 
 const socketService = new SocketService();
-socketService.connect("ws://localhost:8765");
+const serverUrl = prompt("Enter server URL", "ws://localhost:8765");
+socketService.connect(serverUrl!);
 socketService.onMessage((message) => { messageHandler.handle(message as Message) });
 
 
