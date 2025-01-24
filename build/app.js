@@ -1,6 +1,7 @@
 import AlertMsgComponent from "./components/alert_msg.js";
 import AuthComponent from "./components/auth.js";
 import JoinGameComponent from "./components/join_game.js";
+import TableComponent from "./components/table.js";
 import GameService from "./game_service.js";
 import MessageHandler from "./message_handler.js";
 import SocketService from "./socket_service.js";
@@ -17,3 +18,5 @@ const joinGameComponent = new JoinGameComponent(gameService);
 stateStore.subscribe(joinGameComponent);
 const alertMsgComponent = new AlertMsgComponent();
 stateStore.subscribe(alertMsgComponent);
+const tableComponent = new TableComponent();
+stateStore.subscribe(tableComponent);

@@ -34,10 +34,10 @@ export default class MessageHandler {
     }
 
     private handleSharedGameState(sharedGameState: SharedGameState) {
-        this.stateStore.update((state) => ({ ...state, sharedGameState }));
+        this.stateStore.update((state) => ({ ...state, sharedGameState, alertMsg: undefined }));
     }
 
     private handlePrivateGameState(privateView: PrivateView) {
-        this.stateStore.update((state) => ({ ...state, myCards: privateView.cards }));
+        this.stateStore.update((state) => ({ ...state, myCards: privateView.cards, alertMsg: undefined }));
     }
 }
