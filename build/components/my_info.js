@@ -1,9 +1,15 @@
 export default class MyInfoComponent {
-    constructor(stateStore) {
+    constructor(stateStore, gameService) {
+        var _a;
         this.stateStore = stateStore;
+        this.gameService = gameService;
         this.myInfoSpan = document.getElementById('my-info');
         this.myCardsContainer = document.getElementById('my-cards');
         this.myDealerToken = document.getElementById('my-dealer-token');
+        this.makeMoveBtn = document.getElementById('make-move-btn');
+        (_a = this.makeMoveBtn) === null || _a === void 0 ? void 0 : _a.addEventListener('click', () => {
+            this.gameService.makeMove();
+        });
     }
     reset() {
         var _a;
@@ -14,6 +20,8 @@ export default class MyInfoComponent {
         }
         if (this.myDealerToken)
             this.myDealerToken.style.display = 'none';
+        if (this.makeMoveBtn)
+            this.makeMoveBtn.style.display = 'none';
     }
     cardToStr(card) {
         const suitSymbols = { 'd': '♦', 'c': '♣', 'h': '♥', 's': '♠' };
@@ -43,6 +51,8 @@ export default class MyInfoComponent {
         if (((_b = state.sharedGameState) === null || _b === void 0 ? void 0 : _b.currentPlayerId) === state.playerId) {
             if (this.myDealerToken)
                 this.myDealerToken.style.display = 'block';
+            if (this.makeMoveBtn)
+                this.makeMoveBtn.style.display = 'block';
         }
         const cards = state.myCards;
         if (cards) {

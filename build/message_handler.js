@@ -31,6 +31,6 @@ export default class MessageHandler {
         this.stateStore.update((state) => (Object.assign(Object.assign({}, state), { sharedGameState, alertMsg: undefined })));
     }
     handlePrivateGameState(privateView) {
-        this.stateStore.update((state) => (Object.assign(Object.assign({}, state), { myCards: privateView.cards, alertMsg: undefined })));
+        this.stateStore.update((state) => (Object.assign(Object.assign({}, state), { myCards: privateView.cards, alertMsg: undefined, selectedCards: [] })));
     }
 }

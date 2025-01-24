@@ -31,5 +31,5 @@ stateStore.subscribe(alertMsgComponent);
 const tableComponent = new TableComponent();
 stateStore.subscribe(tableComponent);
 
-const myInfoComponent = new MyInfoComponent(stateStore);
+const myInfoComponent = new MyInfoComponent(stateStore, gameService);
 stateStore.subscribe(myInfoComponent);

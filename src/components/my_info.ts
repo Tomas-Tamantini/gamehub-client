@@ -1,4 +1,5 @@
 import { Card } from "../card";
+import GameService from "../game_service";
 import { GlobalState } from "../state";
 import StateStore from "../state_store";
 
@@ -6,8 +7,13 @@ export default class MyInfoComponent {
     private myInfoSpan = document.getElementById('my-info');
     private myCardsContainer = document.getElementById('my-cards');
     private myDealerToken = document.getElementById('my-dealer-token');
+    private makeMoveBtn = document.getElementById('make-move-btn');
 
-    constructor(private stateStore: StateStore) { }
+    constructor(private stateStore: StateStore, private gameService: GameService) {
+        this.makeMoveBtn?.addEventListener('click', () => {
+            this.gameService.makeMove();
+        });
+    }
 
     private reset() {
         if (this.myInfoSpan) this.myInfoSpan.innerHTML = '';
@@ -15,6 +21,7 @@ export default class MyInfoComponent {
             this.myCardsContainer.removeChild(this.myCardsContainer.firstChild);
         }
         if (this.myDealerToken) this.myDealerToken.style.display = 'none';
+        if (this.makeMoveBtn) this.makeMoveBtn.style.display = 'none';
     }
 
     private cardToStr(card: Card) {
@@ -44,6 +51,7 @@ export default class MyInfoComponent {
         if (this.myInfoSpan) this.myInfoSpan.innerHTML = text;
         if (state.sharedGameState?.currentPlayerId === state.playerId) {
             if (this.myDealerToken) this.myDealerToken.style.display = 'block';
+            if (this.makeMoveBtn) this.makeMoveBtn.style.display = 'block';
         }
         const cards = state.myCards;
         if (cards) {

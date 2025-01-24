@@ -170,3 +170,7 @@ button:active {
 .red {
     color: red;
 }
+
+#make-move-btn {
+    border: solid 1px #000;
+}

@@ -10,4 +10,12 @@ export default class GameService {
             payload: { gameType: "chinese_poker" }
         });
     }
+    makeMove() {
+        const { playerId, selectedCards, roomId } = this.stateStore.getState();
+        this.socketService.send({
+            playerId,
+            requestType: "MAKE_MOVE",
+            payload: { roomId, move: { cards: selectedCards } }
+        });
+    }
 }
