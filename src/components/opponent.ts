@@ -6,7 +6,7 @@ export default function createOpponentComponent(player: SharedPlayerState, posit
     div.classList.add(position);
     div.innerHTML = `
         <div class="opponent-info">
-            <div>${player.playerId} - ${player.numPoints}pts</div>
+            <span>${player.playerId} - ${player.numPoints}pts</span>
             <div class="card card-back">${player.numCards}</div>
         </div>
     `;

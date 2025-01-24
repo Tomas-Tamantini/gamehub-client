@@ -1,6 +1,7 @@
 import AlertMsgComponent from "./components/alert_msg";
 import AuthComponent from "./components/auth";
 import JoinGameComponent from "./components/join_game";
+import MyInfoComponent from "./components/my_info";
 import TableComponent from "./components/table";
 import GameService from "./game_service";
 import { Message } from "./message";
@@ -29,3 +30,6 @@ stateStore.subscribe(alertMsgComponent);
 
 const tableComponent = new TableComponent();
 stateStore.subscribe(tableComponent);
+
+const myInfoComponent = new MyInfoComponent();
+stateStore.subscribe(myInfoComponent);
