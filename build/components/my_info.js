@@ -1,5 +1,6 @@
 export default class MyInfoComponent {
-    constructor() {
+    constructor(stateStore) {
+        this.stateStore = stateStore;
         this.myInfoSpan = document.getElementById('my-info');
         this.myCardsContainer = document.getElementById('my-cards');
         this.myDealerToken = document.getElementById('my-dealer-token');
@@ -17,6 +18,18 @@ export default class MyInfoComponent {
     cardToStr(card) {
         const suitSymbols = { 'd': '♦', 'c': '♣', 'h': '♥', 's': '♠' };
         return `${card.rank}${suitSymbols[card.suit]}`;
+    }
+    cardIsSelected(card, selectedCards) {
+        return selectedCards.some(c => c.rank === card.rank && c.suit === card.suit);
+    }
+    toggleSelection(card, selectedCards) {
+        const idx = selectedCards.findIndex(c => c.rank === card.rank && c.suit === card.suit);
+        if (idx === -1) {
+            return [...selectedCards, card];
+        }
+        else {
+            return selectedCards.filter(c => c.rank !== card.rank || c.suit !== card.suit);
+        }
     }
     update(state) {
         var _a, _b;
@@ -38,6 +51,9 @@ export default class MyInfoComponent {
                 const cardDiv = document.createElement('div');
                 cardDiv.classList.add('card');
                 cardDiv.classList.add('card-front');
+                if (this.cardIsSelected(card, state.selectedCards || [])) {
+                    cardDiv.classList.add('selected');
+                }
                 if (card.suit === 'd' || card.suit === 'h') {
                     cardDiv.classList.add('red');
                 }
@@ -46,6 +62,12 @@ export default class MyInfoComponent {
                 }
                 const text = this.cardToStr(card);
                 cardDiv.innerHTML = text;
+                cardDiv.onclick = () => {
+                    this.stateStore.update(state => {
+                        const selectedCards = this.toggleSelection(card, state.selectedCards || []);
+                        return Object.assign(Object.assign({}, state), { selectedCards });
+                    });
+                };
                 (_a = this.myCardsContainer) === null || _a === void 0 ? void 0 : _a.appendChild(cardDiv);
             });
         }

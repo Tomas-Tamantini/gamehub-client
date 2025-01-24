@@ -32,4 +32,5 @@ export interface GlobalState {
     alertMsg?: string;
     sharedGameState?: SharedGameState;
     myCards?: Card[];
+    selectedCards?: Card[];
 }
