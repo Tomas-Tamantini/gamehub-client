@@ -6,9 +6,9 @@ export default class GameService {
 
     public joinGame() {
         this.socketService.send({
-            player_id: this.stateStore.getState().playerId,
-            request_type: "JOIN_GAME_BY_TYPE",
-            payload: { game_type: "chinese_poker" }
+            playerId: this.stateStore.getState().playerId,
+            requestType: "JOIN_GAME_BY_TYPE",
+            payload: { gameType: "chinese_poker" }
         });
     }
 }

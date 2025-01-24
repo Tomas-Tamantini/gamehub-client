@@ -21,9 +21,9 @@ describe("GameService", () => {
         gameService.joinGame();
 
         expect(socketServiceMock.send).toHaveBeenCalledWith({
-            player_id: "12345",
-            request_type: "JOIN_GAME_BY_TYPE",
-            payload: { game_type: "chinese_poker" },
+            playerId: "12345",
+            requestType: "JOIN_GAME_BY_TYPE",
+            payload: { gameType: "chinese_poker" },
         });
     });
 });
