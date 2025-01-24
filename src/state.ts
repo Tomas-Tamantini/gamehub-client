@@ -20,10 +20,16 @@ export interface SharedPlayerState {
     numCards: number;
 }
 
+export interface Move {
+    playerId: string;
+    cards: Card[];
+}
+
 export interface SharedGameState {
     status: GameStatus;
     currentPlayerId?: string;
     players: SharedPlayerState[];
+    moveHistory: Move[];
 }
 
 export interface GlobalState {
