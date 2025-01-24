@@ -1,3 +1,4 @@
+import cardToStr from "./card_to_str.js";
 export default class MyInfoComponent {
     constructor(stateStore, gameService) {
         var _a;
@@ -26,10 +27,6 @@ export default class MyInfoComponent {
         while ((_b = this.myHistoryContainer) === null || _b === void 0 ? void 0 : _b.firstChild) {
             this.myHistoryContainer.removeChild(this.myHistoryContainer.firstChild);
         }
-    }
-    cardToStr(card) {
-        const suitSymbols = { 'd': '♦', 'c': '♣', 'h': '♥', 's': '♠' };
-        return `${card.rank}${suitSymbols[card.suit]}`;
     }
     cardIsSelected(card, selectedCards) {
         return selectedCards.some(c => c.rank === card.rank && c.suit === card.suit);
@@ -74,7 +71,7 @@ export default class MyInfoComponent {
                 else {
                     cardDiv.classList.add('black');
                 }
-                const text = this.cardToStr(card);
+                const text = cardToStr(card);
                 cardDiv.innerHTML = text;
                 cardDiv.onclick = () => {
                     this.stateStore.update(state => {
@@ -108,7 +105,7 @@ export default class MyInfoComponent {
                     else {
                         cardDiv.classList.add('black');
                     }
-                    const text = this.cardToStr(card);
+                    const text = cardToStr(card);
                     cardDiv.innerHTML = text;
                     (_a = this.myHistoryContainer) === null || _a === void 0 ? void 0 : _a.appendChild(cardDiv);
                 });

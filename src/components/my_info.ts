@@ -2,6 +2,7 @@ import { Card } from "../card";
 import GameService from "../game_service";
 import { GlobalState } from "../state";
 import StateStore from "../state_store";
+import cardToStr from "./card_to_str";
 
 export default class MyInfoComponent {
     private myInfoSpan = document.getElementById('my-info');
@@ -26,11 +27,6 @@ export default class MyInfoComponent {
         while (this.myHistoryContainer?.firstChild) {
             this.myHistoryContainer.removeChild(this.myHistoryContainer.firstChild);
         }
-    }
-
-    private cardToStr(card: Card) {
-        const suitSymbols = { 'd': '♦', 'c': '♣', 'h': '♥', 's': '♠' };
-        return `${card.rank}${suitSymbols[card.suit]}`;
     }
 
     private cardIsSelected(card: Card, selectedCards: Card[]) {
@@ -74,7 +70,7 @@ export default class MyInfoComponent {
                 else {
                     cardDiv.classList.add('black');
                 }
-                const text = this.cardToStr(card);
+                const text = cardToStr(card);
                 cardDiv.innerHTML = text;
                 cardDiv.onclick = () => {
                     this.stateStore.update(state => {
@@ -108,7 +104,7 @@ export default class MyInfoComponent {
                     else {
                         cardDiv.classList.add('black');
                     }
-                    const text = this.cardToStr(card);
+                    const text = cardToStr(card);
                     cardDiv.innerHTML = text;
                     this.myHistoryContainer?.appendChild(cardDiv);
                 });

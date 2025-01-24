@@ -84,25 +84,33 @@ button:active {
     align-items: center;
 }
 
-.opponent.left {
+.opponent {
     position: absolute;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+}
+
+.opponent.left {
     top: 50%;
     left: 2%;
     transform: translateY(-50%);
+    flex-direction: row;
 }
 
 .opponent.right {
-    position: absolute;
     top: 50%;
     right: 2%;
     transform: translateY(-50%);
+    flex-direction: row-reverse;
 }
 
 .opponent.top {
-    position: absolute;
     top: 2%;
     left: 50%;
     transform: translateX(-50%);
+    flex-direction: column;
 }
 
 .player-status {
