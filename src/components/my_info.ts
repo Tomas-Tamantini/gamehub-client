@@ -4,6 +4,9 @@ import { GlobalState } from "../state";
 import StateStore from "../state_store";
 import cardToStr from "./card_to_str";
 
+// TODO: Merge this class with opponent component, into a single PlayerComponent class
+// that handles both the player and the opponents
+
 export default class MyInfoComponent {
     private myInfoSpan = document.getElementById('my-info');
     private myCardsContainer = document.getElementById('my-cards');
@@ -44,6 +47,7 @@ export default class MyInfoComponent {
     }
 
     public update(state: GlobalState) {
+        // TODO: Reduce cognitive complexity
         this.reset();
         const me = state.sharedGameState?.players.find(p => p.playerId === state.playerId);
         if (!me) return;

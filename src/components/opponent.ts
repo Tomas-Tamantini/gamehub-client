@@ -6,6 +6,8 @@ export default function createOpponentComponent(
     position: 'bottom' | 'top' | 'left' | 'right',
     isTheirTurn: boolean,
     lastMove?: Move): HTMLDivElement {
+    // TODO: Join the arguments player / isTheirTurn / lastMove into a single object
+    // TODO: Reduce cognitive complexity
     const div = document.createElement('div');
     div.classList.add('opponent');
     div.classList.add(position);

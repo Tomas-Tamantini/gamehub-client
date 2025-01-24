@@ -1,5 +1,7 @@
 import cardToStr from "./card_to_str.js";
 export default function createOpponentComponent(player, position, isTheirTurn, lastMove) {
+    // TODO: Join the arguments player / isTheirTurn / lastMove into a single object
+    // TODO: Reduce cognitive complexity
     const div = document.createElement('div');
     div.classList.add('opponent');
     div.classList.add(position);

@@ -1,4 +1,6 @@
 import cardToStr from "./card_to_str.js";
+// TODO: Merge this class with opponent component, into a single PlayerComponent class
+// that handles both the player and the opponents
 export default class MyInfoComponent {
     constructor(stateStore, gameService) {
         var _a;
@@ -42,6 +44,7 @@ export default class MyInfoComponent {
     }
     update(state) {
         var _a, _b, _c;
+        // TODO: Reduce cognitive complexity
         this.reset();
         const me = (_a = state.sharedGameState) === null || _a === void 0 ? void 0 : _a.players.find(p => p.playerId === state.playerId);
         if (!me)
