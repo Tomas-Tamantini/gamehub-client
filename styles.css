@@ -6,13 +6,20 @@ body {
     height: 100vh;
 }
 
-.toolbar {
+header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     background-color: #333;
     color: #fff;
     padding: 10px 20px;
+}
+
+footer {
+    background-color: #333;
+    color: #fff;
+    padding: 10px 20px;
+    text-align: center;
 }
 
 .app-name {

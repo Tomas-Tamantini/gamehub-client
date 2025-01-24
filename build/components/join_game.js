@@ -10,7 +10,7 @@ export default class JoinGameComponent {
     }
     update(state) {
         var _a, _b;
-        if (state.playerId) {
+        if (state.playerId && !state.roomId) {
             (_a = this.joinBtn) === null || _a === void 0 ? void 0 : _a.classList.remove('hidden');
         }
         else {
