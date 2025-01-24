@@ -96,10 +96,23 @@ button:active {
     transform: translateX(-50%);
 }
 
-.card {
+.player-info {
     display: flex;
+    flex-direction: column;
+    gap: 10px;
     justify-content: center;
     align-items: center;
+}
+
+#my-cards {
+    display: inline-flex;
+    gap: 0px;
+    justify-content: center;
+
+}
+
+.card {
+    display: flex;
     width: 30px;
     height: 50px;
     border-radius: 5px;
@@ -108,5 +121,34 @@ button:active {
 }
 
 .card.card-back {
+    justify-content: center;
+    align-items: center;
     background-color: blue;
+}
+
+.card.card-front {
+    background-color: white;
+    font-weight: bold;
+    display: flex;
+    align-items: flex-start;
+    position: relative;
+    margin-left: -10px;
+    cursor: pointer;
+    transition: transform 0.1s;
+}
+
+.card.card-front:first-child {
+    margin-left: 0;
+}
+
+.card.selected {
+    transform: translateY(-10px);
+}
+
+.black {
+    color: black;
+}
+
+.red {
+    color: red;
 }
