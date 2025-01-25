@@ -7,6 +7,14 @@ import cardToStr from "./card_to_str";
 // TODO: Merge this class with opponent component, into a single PlayerComponent class
 // that handles both the player and the opponents
 
+function cardValue(card: Card) {
+    const sortedRanks = "3456789TJQKA2";
+    const sortedSuits = "dhsc";
+    const suitValue = sortedSuits.indexOf(card.suit);
+    const rankValue = sortedRanks.indexOf(card.rank);
+    return rankValue * 4 + suitValue;
+}
+
 export default class MyInfoComponent {
     private myInfoSpan = document.getElementById('my-info');
     private myCardsContainer = document.getElementById('my-cards');
@@ -81,6 +89,12 @@ export default class MyInfoComponent {
                         const selectedCards = this.toggleSelection(card, state.selectedCards || []);
                         return { ...state, selectedCards };
                     });
+                }
+                cardDiv.ondblclick = () => {
+                    this.stateStore.update(state => {
+                        const myCards = state.myCards?.slice().sort((a, b) => cardValue(a) - cardValue(b));
+                        return { ...state, myCards, selectedCards: [] };
+                    })
                 }
                 this.myCardsContainer?.appendChild(cardDiv);
             })

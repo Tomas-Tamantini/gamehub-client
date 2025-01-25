@@ -37,6 +37,12 @@ export default class MessageHandler {
         this.stateStore.update((state) => (Object.assign(Object.assign({}, state), { sharedGameState, alertMsg, myCards })));
     }
     handlePrivateGameState(privateView) {
-        this.stateStore.update((state) => (Object.assign(Object.assign({}, state), { myCards: privateView.cards, alertMsg: undefined, selectedCards: [] })));
+        const serverCards = privateView.cards;
+        const previousCards = this.stateStore.getState().myCards || [];
+        const sortedCards = serverCards.sort((a, b) => cardIndex(previousCards, a) - cardIndex(previousCards, b));
+        this.stateStore.update((state) => (Object.assign(Object.assign({}, state), { myCards: sortedCards, alertMsg: undefined, selectedCards: [] })));
     }
+}
+function cardIndex(cards, card) {
+    return cards.findIndex(c => c.rank === card.rank && c.suit === card.suit);
 }
