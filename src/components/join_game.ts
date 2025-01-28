@@ -13,7 +13,7 @@ export default class JoinGameComponent {
     }
 
     public update(state: GlobalState) {
-        if (state.playerId && !state.roomId) {
+        if ((state.playerId && !state.roomId) || state.sharedGameState?.status === 'END_GAME') {
             this.joinBtn?.classList.remove('hidden');
         }
         else {
