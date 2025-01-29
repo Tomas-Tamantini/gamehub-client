@@ -1,3 +1,4 @@
+import { Card } from "./card";
 import SocketService from "./socket_service";
 import StateStore from "./state_store";
 
@@ -12,12 +13,12 @@ export default class GameService {
         });
     }
 
-    public makeMove() {
-        const { playerId, selectedCards, roomId } = this.stateStore.getState();
+    public makeMove(cards: Card[]) {
+        const { playerId, roomId } = this.stateStore.getState();
         this.socketService.send({
             playerId,
             requestType: "MAKE_MOVE",
-            payload: { roomId, move: { cards: selectedCards } }
+            payload: { roomId, move: { cards } }
         });
     }
 }

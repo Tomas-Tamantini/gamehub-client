@@ -32,10 +32,9 @@ describe("GameService", () => {
         const cards: Card[] = [{ rank: 'A', suit: 'd' }];
         stateStore.update(() => ({
             playerId: "Alice",
-            selectedCards: cards,
             roomId: 123
         }))
-        gameService.makeMove();
+        gameService.makeMove(cards);
         expect(socketServiceMock.send).toHaveBeenCalledWith({
             playerId: "Alice",
             requestType: "MAKE_MOVE",
