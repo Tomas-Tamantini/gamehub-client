@@ -37,6 +37,9 @@ function privateCardComponent(card: CardUI, stateStore: StateStore) {
             return { ...state, selectedCards };
         });
     }
+    div.ondblclick = () => {
+        stateStore.update(state => ({ ...state, selectedCards: [] }));
+    };
     return div;
 }
 
