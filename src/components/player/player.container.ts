@@ -18,8 +18,8 @@ export default function playerComponent(player: PlayerUI, stateStore: StateStore
     div.classList.add('player');
     div.classList.add(position);
     div.appendChild(playerStateComponent(player, stateStore));
-    if (player.isTheirTurn) div.appendChild(dealerTokenComponent());
     if (player.moveHistory.length > 0) div.appendChild(moveHistoryComponent(player.moveHistory));
+    if (player.isTheirTurn) div.appendChild(dealerTokenComponent());
     return div;
 }
 
