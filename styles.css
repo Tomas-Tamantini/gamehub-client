@@ -235,15 +235,6 @@ button:active {
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
 }
 
-.icon-btn {
-    padding: 3px;
-    font-size: 0.8rem;
-    background-color: transparent;
-    font-weight: normal;
-    cursor: pointer;
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
-}
-
 #pass-btn {
     background-color: #dc3545;
 }
@@ -276,4 +267,21 @@ button:active {
 #make-move-btn:disabled {
     background-color: #7a7a7a;
     cursor: not-allowed;
+}
+
+.icon-btn {
+    padding: 3px;
+    font-size: 0.8rem;
+    background-color: transparent;
+    font-weight: normal;
+    cursor: pointer;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.icon-btn:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.icon-btn:active {
+    background-color: rgba(0, 0, 0, 0.2);
 }
