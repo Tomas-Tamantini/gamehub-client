@@ -135,7 +135,6 @@ button:active {
     display: inline-flex;
     gap: 0px;
     justify-content: center;
-
 }
 
 .card {
@@ -160,6 +159,14 @@ button:active {
     height: 35px;
     justify-content: center;
     align-items: center;
+}
+
+.card.card-micro {
+    width: 17px;
+    height: 20px;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.8rem;
 }
 
 .card.card-front {
@@ -192,4 +199,52 @@ button:active {
 
 .pass-move {
     font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.pass-move.micro {
+    font-weight: normal;
+    font-size: 0.8rem;
+}
+
+.player {
+    position: absolute;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+}
+
+.player.left {
+    top: 50%;
+    left: 2%;
+    transform: translateY(-50%);
+    flex-direction: row;
+}
+
+.player.right {
+    top: 50%;
+    right: 2%;
+    transform: translateY(-50%);
+    flex-direction: row-reverse;
+}
+
+.player.top {
+    top: 2%;
+    left: 50%;
+    transform: translateX(-50%);
+    flex-direction: column;
+}
+
+.player.bottom {
+    bottom: 2%;
+    left: 50%;
+    transform: translateX(-50%);
+    flex-direction: column-reverse;
+}
+
+.move-history {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
 }
