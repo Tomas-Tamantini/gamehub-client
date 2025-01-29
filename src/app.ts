@@ -1,7 +1,7 @@
+import ActionButtonsComponent from "./components/action_buttons";
 import AlertMsgComponent from "./components/alert_msg";
 import AuthComponent from "./components/auth";
 import JoinGameComponent from "./components/join_game";
-import MyInfoComponent from "./components/my_info";
 import TableComponent from "./components/table";
 import GameService from "./game_service";
 import { Message } from "./message";
@@ -13,7 +13,7 @@ const stateStore = new StateStore();
 const messageHandler = new MessageHandler(stateStore);
 
 const socketService = new SocketService();
-const serverUrl = prompt("Enter server URL", "ws://localhost:8765");
+const serverUrl = "ws://localhost:8765"
 socketService.connect(serverUrl!);
 socketService.onMessage((message) => { messageHandler.handle(message as Message) });
 
@@ -29,8 +29,8 @@ stateStore.subscribe(joinGameComponent);
 const alertMsgComponent = new AlertMsgComponent();
 stateStore.subscribe(alertMsgComponent);
 
-const tableComponent = new TableComponent();
+const tableComponent = new TableComponent(stateStore);
 stateStore.subscribe(tableComponent);
 
-const myInfoComponent = new MyInfoComponent(stateStore, gameService);
-stateStore.subscribe(myInfoComponent);
+const actionButtonsComponent = new ActionButtonsComponent(stateStore, gameService);
+stateStore.subscribe(actionButtonsComponent);

@@ -76,41 +76,10 @@ button:active {
     border-radius: 50%;
 }
 
-.opponent-info {
+.player-state {
     display: flex;
     flex-direction: column;
     gap: 5px;
-    justify-content: center;
-    align-items: center;
-}
-
-.opponent {
-    position: absolute;
-    display: flex;
-    gap: 10px;
-    justify-content: center;
-    align-items: center;
-}
-
-.opponent.left {
-    top: 50%;
-    left: 2%;
-    transform: translateY(-50%);
-    flex-direction: row;
-}
-
-.opponent.right {
-    top: 50%;
-    right: 2%;
-    transform: translateY(-50%);
-    flex-direction: row-reverse;
-}
-
-.opponent.top {
-    top: 2%;
-    left: 50%;
-    transform: translateX(-50%);
-    flex-direction: column;
 }
 
 .player-status {
@@ -193,9 +162,6 @@ button:active {
     color: red;
 }
 
-#make-move-btn {
-    border: solid 1px #000;
-}
 
 .pass-move {
     font-weight: bold;
@@ -247,4 +213,64 @@ button:active {
     display: flex;
     flex-direction: column;
     gap: 5px;
+}
+
+.action-btns {
+    position: absolute;
+    bottom: 5%;
+    right: 2%;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+#pass-btn {
+    background-color: #dc3545;
+}
+
+#pass-btn:hover {
+    background-color: #c82333;
+}
+
+#pass-btn:active {
+    background-color: #bd2130;
+}
+
+#pass-btn:disabled {
+    background-color: #7a7a7a;
+    cursor: not-allowed;
+}
+
+#make-move-btn {
+    background-color: #28a745;
+}
+
+#make-move-btn:hover {
+    background-color: #218838;
+}
+
+#make-move-btn:active {
+    background-color: #1e7e34;
+}
+
+#make-move-btn:disabled {
+    background-color: #7a7a7a;
+    cursor: not-allowed;
+}
+
+#sort-cards-btn {
+    background-color: #007bff;
+}
+
+#sort-cards-btn:hover {
+    background-color: #0056b3;
+}
+
+#sort-cards-btn:active {
+    background-color: #004b9a;
+}
+
+#sort-cards-btn:disabled {
+    background-color: #7a7a7a;
+    cursor: not-allowed;
 }

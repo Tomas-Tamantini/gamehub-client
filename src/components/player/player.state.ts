@@ -5,6 +5,7 @@ import playerStatusComponent from "./player.status";
 
 export default function playerStateComponent(player: PlayerUI, stateStore: StateStore) {
     const div = document.createElement('div');
+    div.classList.add('player-state');
     div.appendChild(playerStatusComponent(player));
     if (player.cards !== undefined) div.appendChild(privateCardsComponent(player.cards, stateStore));
     else
