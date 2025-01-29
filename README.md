@@ -1,6 +1,6 @@
 # Gamehub-Client
 
-A websocket client to play Chinese Poker on on [Gamehub](https://github.com/Tomas-Tamantini/gamehub).
+A websocket client to play Chinese Poker on on [Gamehub](https://github.com/Tomas-Tamantini/gamehub). See the github pages hosted app [here](https://tomas-tamantini.github.io/gamehub-client/).
 
 ## Install dependencies
 
