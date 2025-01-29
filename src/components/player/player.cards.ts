@@ -1,4 +1,5 @@
 import { Card } from "../../card";
+import { GlobalState } from "../../state";
 import StateStore from "../../state_store";
 import cardToStr from "../card_to_str";
 import CardUI from "./card.model";
@@ -11,6 +12,13 @@ export function hiddenCardsComponent(numCards: number) {
 }
 
 export function privateCardsComponent(cards: CardUI[], stateStore: StateStore) {
+    const div = document.createElement('div');
+    div.appendChild(handContainer(cards, stateStore));
+    div.appendChild(sortButton(stateStore));
+    return div;
+}
+
+export function handContainer(cards: CardUI[], stateStore: StateStore) {
     const div = document.createElement('div');
     div.classList.add('hand-container');
     cards.forEach(card => {
@@ -47,5 +55,30 @@ function toggleSelection(card: Card, selectedCards: Card[]) {
     if (selectedCards.some(c => c.rank === card.rank && c.suit === card.suit))
         return selectedCards.filter(c => c.rank !== card.rank || c.suit !== card.suit);
     else return [...selectedCards, card];
+}
 
+function cardValue(card: Card) {
+    const sortedRanks = "3456789TJQKA2";
+    const sortedSuits = "dhsc";
+    const suitValue = sortedSuits.indexOf(card.suit);
+    const rankValue = sortedRanks.indexOf(card.rank);
+    return rankValue * 4 + suitValue;
+}
+
+function sortButton(stateStore: StateStore) {
+    const button = document.createElement('button');
+    button.classList.add('icon-btn');
+    button.textContent = '⇄';
+    button.onclick = () => {
+        stateStore.update(sortCards);
+    }
+    return button;
+}
+
+function sortCards(state: GlobalState): GlobalState {
+    if (!state.myCards || state.myCards.length === 0) return { ...state, selectedCards: [] };
+    let myCards = state.myCards?.slice().sort((a, b) => cardValue(a) - cardValue(b));
+    const isAscending = state.myCards.every((card, i, arr) => i === 0 || cardValue(arr[i - 1]) <= cardValue(card));
+    if (isAscending) myCards = myCards.reverse();
+    return { ...state, myCards, selectedCards: [] };
 }

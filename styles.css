@@ -217,11 +217,31 @@ button:active {
 
 .action-btns {
     position: absolute;
-    bottom: 5%;
+    bottom: 10%;
     right: 2%;
     display: flex;
     gap: 10px;
     justify-content: center;
+}
+
+.action-btn {
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.2s;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.icon-btn {
+    padding: 3px;
+    font-size: 0.8rem;
+    background-color: transparent;
+    font-weight: normal;
+    cursor: pointer;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 #pass-btn {
@@ -242,35 +262,18 @@ button:active {
 }
 
 #make-move-btn {
-    background-color: #28a745;
+    background-color: #6f42c1;
 }
 
 #make-move-btn:hover {
-    background-color: #218838;
+    background-color: #5d3bbf;
 }
 
 #make-move-btn:active {
-    background-color: #1e7e34;
+    background-color: #4c2cbf;
 }
 
 #make-move-btn:disabled {
-    background-color: #7a7a7a;
-    cursor: not-allowed;
-}
-
-#sort-cards-btn {
-    background-color: #007bff;
-}
-
-#sort-cards-btn:hover {
-    background-color: #0056b3;
-}
-
-#sort-cards-btn:active {
-    background-color: #004b9a;
-}
-
-#sort-cards-btn:disabled {
     background-color: #7a7a7a;
     cursor: not-allowed;
 }
