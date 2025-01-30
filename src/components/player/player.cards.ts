@@ -14,7 +14,7 @@ export function hiddenCardsComponent(numCards: number) {
 export function privateCardsComponent(cards: CardUI[], stateStore: StateStore) {
     const div = document.createElement('div');
     div.appendChild(handContainer(cards, stateStore));
-    div.appendChild(sortButton(stateStore));
+    if (cards.length > 1) div.appendChild(sortButton(stateStore));
     return div;
 }
 
