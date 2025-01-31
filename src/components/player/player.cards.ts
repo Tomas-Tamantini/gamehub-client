@@ -21,6 +21,7 @@ export function privateCardsComponent(cards: CardUI[], stateStore: StateStore) {
 export function handContainer(cards: CardUI[], stateStore: StateStore) {
     const div = document.createElement('div');
     div.classList.add('hand-container');
+    div.classList.add('my-hand');
     cards.forEach(card => {
         div.appendChild(privateCardComponent(card, stateStore));
     });

@@ -8,6 +8,7 @@ function playerNameComponent(playerName: string) {
 
 function numPointsComponent(numPoints: number) {
     const span = document.createElement('span');
+    span.classList.add('num-points');
     span.textContent = `${numPoints} pts`;
     return span;
 }

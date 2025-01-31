@@ -22,6 +22,10 @@ footer {
     text-align: center;
 }
 
+span {
+    text-align: center;
+}
+
 .app-name {
     font-size: 1.5rem;
 }
@@ -80,12 +84,23 @@ button:active {
     display: flex;
     flex-direction: column;
     gap: 5px;
+    align-items: center;
 }
 
 .player-status {
     display: flex;
-    flex-direction: row;
-    gap: 10px;
+    flex-direction: column;
+    gap: 2px;
+    background-color: #333;
+    padding: 5px 5px 3px 5px;
+    border-radius: 5px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.num-points {
+    background-color: #555;
+    border-radius: 5px;
+    padding: 5px;
 }
 
 .player-info {
@@ -104,6 +119,11 @@ button:active {
     display: inline-flex;
     gap: 0px;
     justify-content: center;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.hand-container.my-hand {
+    margin-top: 8px;
 }
 
 .card {
