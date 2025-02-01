@@ -72,14 +72,6 @@ button:active {
     align-items: center;
 }
 
-.dealer-token {
-    width: 15px;
-    height: 15px;
-    background-color: red;
-    border: 2px solid #000;
-    border-radius: 50%;
-}
-
 .player-state {
     display: flex;
     flex-direction: column;
@@ -91,14 +83,68 @@ button:active {
     display: flex;
     flex-direction: column;
     gap: 2px;
-    background-color: #333;
+    border: 1px solid #111;
+    background: linear-gradient(90deg, #333, #373737);
     padding: 5px 5px 3px 5px;
     border-radius: 5px;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
 }
 
+@keyframes rotate-border {
+    0% {
+        --angle: 0deg;
+    }
+
+    10% {
+        --angle: 36deg;
+    }
+
+    20% {
+        --angle: 72deg;
+    }
+
+    30% {
+        --angle: 108deg;
+    }
+
+    40% {
+        --angle: 144deg;
+    }
+
+    50% {
+        --angle: 180deg;
+    }
+
+    60% {
+        --angle: 216deg;
+    }
+
+    70% {
+        --angle: 252deg;
+    }
+
+    80% {
+        --angle: 288deg;
+    }
+
+    90% {
+        --angle: 324deg;
+    }
+
+    100% {
+        --angle: 360deg;
+    }
+}
+
+.player-status.their-turn {
+    border: 2px solid transparent;
+    background: linear-gradient(90deg, #333, #373737) padding-box,
+        linear-gradient(var(--angle), #ff8c00, #ff00ff) border-box;
+    animation: rotate-border 1s linear infinite;
+}
+
 .num-points {
-    background-color: #555;
+    background: linear-gradient(90deg, #555, #444);
     border-radius: 5px;
     padding: 5px;
 }

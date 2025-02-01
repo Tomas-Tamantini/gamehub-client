@@ -1,5 +1,4 @@
 import StateStore from "../../state_store";
-import dealerTokenComponent from "./player.dealer_token";
 import PlayerUI from "./player.model";
 import moveHistoryComponent from "./player.move_history";
 import playerStateComponent from "./player.state";
@@ -19,7 +18,6 @@ export default function playerComponent(player: PlayerUI, stateStore: StateStore
     div.classList.add(position);
     div.appendChild(playerStateComponent(player, stateStore));
     if (player.moveHistory.length > 0) div.appendChild(moveHistoryComponent(player.moveHistory));
-    if (player.isTheirTurn) div.appendChild(dealerTokenComponent());
     return div;
 }
 

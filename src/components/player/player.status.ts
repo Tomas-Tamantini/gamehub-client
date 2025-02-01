@@ -16,6 +16,7 @@ function numPointsComponent(numPoints: number) {
 export default function playerStatusComponent(player: PlayerUI) {
     const div = document.createElement('div');
     div.classList.add('player-status');
+    if (player.isTheirTurn) div.classList.add('their-turn');
     div.appendChild(playerNameComponent(player.playerId));
     div.appendChild(numPointsComponent(player.numPoints));
     return div;
