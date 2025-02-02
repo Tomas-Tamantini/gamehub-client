@@ -17,7 +17,7 @@ export default function playerComponent(player: PlayerUI, stateStore: StateStore
     div.classList.add('player');
     div.classList.add(position);
     div.appendChild(playerStateComponent(player, stateStore));
-    if (player.moveHistory.length > 0) div.appendChild(moveHistoryComponent(player.moveHistory));
+    if (player.handHistory.length > 0) div.appendChild(moveHistoryComponent(player.handHistory));
     return div;
 }
 

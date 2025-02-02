@@ -1,25 +1,27 @@
 import { Card } from "../../card";
 import cardToStr from "../card_to_str";
+import Hand from "./hand.model";
 
-export default function moveHistoryComponent(moveHistory: Card[][]) {
+export default function moveHistoryComponent(handHistory: Hand[]) {
     const div = document.createElement('div');
     div.classList.add('move-history');
-    if (moveHistory.length > 1) {
-        const moveBeforeLast = moveHistory[moveHistory.length - 2];
-        div.appendChild(moveContainer(moveBeforeLast, 'micro'));
+    if (handHistory.length > 1) {
+        const handBeforeLast = handHistory[handHistory.length - 2];
+        div.appendChild(moveContainer(handBeforeLast, 'micro'));
     }
-    if (moveHistory.length > 0) {
-        const lastMove = moveHistory[moveHistory.length - 1];
-        div.appendChild(moveContainer(lastMove, 'mini'));
+    if (handHistory.length > 0) {
+        const lastHand = handHistory[handHistory.length - 1];
+        div.appendChild(moveContainer(lastHand, 'mini'));
     }
     return div;
 }
 
-function moveContainer(move: Card[], size: 'mini' | 'micro') {
-    if (move.length === 0) return passDiv(size);
+function moveContainer(hand: Hand, size: 'mini' | 'micro') {
+    if (hand.cards.length === 0) return passDiv(size);
     const div = document.createElement('div');
     div.classList.add('hand-container');
-    move.forEach(card => {
+    if (hand.isHandToBeat) div.classList.add('hand-to-beat');
+    hand.cards.forEach(card => {
         div.appendChild(cardDiv(card, size));
     });
     return div;

@@ -1,4 +1,4 @@
-import { GameStatus, GlobalState, SharedPlayerState } from "../state";
+import { GlobalState, Move, SharedPlayerState } from "../state";
 import StateStore from "../state_store";
 import CardUI from "./player/card.model";
 import playerComponent from "./player/player.container";
@@ -24,11 +24,21 @@ export default class TableComponent {
             }));
     }
 
+    private isHandToBeat(move: Move, moves: Move[] | undefined): boolean {
+        const lastNonPassMove = moves?.slice().reverse().find(m => m.cards.length > 0);
+        return move === lastNonPassMove;
+    }
+
     private playerDiv(player: SharedPlayerState, offset: number, state: GlobalState) {
         const cards = this.cardsUI(offset, state);
         const isTheirTurn = state.sharedGameState?.currentPlayerId === player.playerId;
         const moveHistory = state.sharedGameState?.moveHistory.filter(m => m.playerId === player.playerId) || [];
-        const playerInfo = { ...player, offset, cards, isTheirTurn, moveHistory: moveHistory.map(m => m.cards) };
+        const handHistory = moveHistory.map(m => (
+            {
+                cards: m.cards,
+                isHandToBeat: this.isHandToBeat(m, state.sharedGameState?.moveHistory),
+            }))
+        const playerInfo = { ...player, offset, cards, isTheirTurn, handHistory };
         return playerComponent(playerInfo, this.stateStore);
     }
 

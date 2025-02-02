@@ -172,6 +172,10 @@ button:active {
     margin-top: 8px;
 }
 
+.hand-container.hand-to-beat {
+    box-shadow: 0 0 10px 2px yellow;
+}
+
 .card {
     display: flex;
     width: 30px;
@@ -279,6 +283,7 @@ button:active {
     display: flex;
     flex-direction: column;
     gap: 5px;
+    align-items: center;
 }
 
 .action-btns {
