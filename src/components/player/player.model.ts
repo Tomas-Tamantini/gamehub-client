@@ -9,5 +9,6 @@ export default interface PlayerUI extends SharedPlayerState {
     cards?: CardUI[];
     isTheirTurn: boolean;
     handHistory: Hand[];
+    isOffline: boolean;
 }
 

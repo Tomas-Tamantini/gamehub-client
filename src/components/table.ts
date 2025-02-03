@@ -38,7 +38,8 @@ export default class TableComponent {
                 cards: m.cards,
                 isHandToBeat: this.isHandToBeat(m, state.sharedGameState?.moveHistory),
             }))
-        const playerInfo = { ...player, offset, cards, isTheirTurn, handHistory };
+        const isOffline = state.offlinePlayers?.includes(player.playerId) ?? false;
+        const playerInfo = { ...player, offset, cards, isTheirTurn, handHistory, isOffline };
         return playerComponent(playerInfo, this.stateStore);
     }
 

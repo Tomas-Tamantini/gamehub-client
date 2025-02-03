@@ -26,6 +26,11 @@ span {
     text-align: center;
 }
 
+span.offline {
+    color: red;
+    text-decoration: line-through;
+}
+
 .app-name {
     font-size: 1.5rem;
 }
