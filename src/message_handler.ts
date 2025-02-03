@@ -1,5 +1,13 @@
 import { Card } from "./card";
-import { ErrorPayload, Message, PlayerJoinedPayload, PrivateView, PrivateViewPayload, SharedViewPayload } from "./message";
+import {
+    ErrorPayload,
+    Message,
+    PlayerDisconnectedPayload,
+    PlayerJoinedPayload,
+    PrivateView,
+    PrivateViewPayload,
+    SharedViewPayload
+} from "./message";
 import { SharedGameState } from "./state";
 import StateStore from "./state_store";
 
@@ -12,6 +20,9 @@ export default class MessageHandler {
         }
         else if (message.messageType === "PLAYER_JOINED") {
             this.handlePlayerJoined(message.payload as PlayerJoinedPayload);
+        }
+        else if (message.messageType === "PLAYER_DISCONNECTED") {
+            this.handlePlayerDisconnected(message.payload as PlayerDisconnectedPayload);
         }
         else if (message.messageType === "GAME_STATE") {
             if (message.payload.sharedView) {
@@ -28,6 +39,11 @@ export default class MessageHandler {
     private handlePlayerJoined(payload: PlayerJoinedPayload) {
         const alertMsg = `Players in room: ${payload.playerIds.join(", ")}`;
         this.stateStore.update((state) => ({ ...state, alertMsg, roomId: payload.roomId }));
+    }
+
+    private handlePlayerDisconnected(payload: PlayerDisconnectedPayload) {
+        const alertMsg = `Players in room: ${payload.room.playerIds.join(", ")}`;
+        this.stateStore.update((state) => ({ ...state, alertMsg }));
     }
 
     private handleErrorMessage(payload: ErrorPayload) {

@@ -17,16 +17,31 @@ describe('MessageHandler', () => {
         let updatedState: GlobalState;
 
         beforeEach(() => {
-            const payload = {
-                playerIds: ['player1', 'player2'],
-                roomId: 123,
-            };
+            const payload = { playerIds: ['player1', 'player2'], roomId: 123 };
             messageHandler.handle({ messageType: 'PLAYER_JOINED', payload });
             updatedState = stateStore.getState();
         });
 
         it('should update state room id', () => {
             expect(updatedState.roomId).toEqual(123);
+        });
+
+        it('should update alert message', () => {
+            expect(updatedState.alertMsg).toEqual('Players in room: player1, player2');
+        });
+
+        it('should preserve rest of the state', () => {
+            expect(updatedState.playerId).toEqual('Alice');
+        });
+    });
+
+    describe('handle PLAYER_DISCONNECTED message', () => {
+        let updatedState: GlobalState;
+
+        beforeEach(() => {
+            const payload = { room: { playerIds: ['player1', 'player2'] } };
+            messageHandler.handle({ messageType: 'PLAYER_DISCONNECTED', payload });
+            updatedState = stateStore.getState();
         });
 
         it('should update alert message', () => {
