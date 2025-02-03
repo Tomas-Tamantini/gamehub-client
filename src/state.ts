@@ -49,4 +49,5 @@ export interface GlobalState {
     sharedGameState?: SharedGameState;
     myCards?: Card[];
     selectedCards?: Card[];
+    isMobile?: boolean;
 }

@@ -35,3 +35,12 @@ stateStore.subscribe(tableComponent);
 
 const actionButtonsComponent = new ActionButtonsComponent(stateStore, gameService);
 stateStore.subscribe(actionButtonsComponent);
+
+function handleScreenSizeChange(e: MediaQueryList) {
+    stateStore.update(state => ({ ...state, isMobile: e.matches }));
+}
+
+const mediaQuery = window.matchMedia("(max-width: 600px)");
+mediaQuery.addEventListener("change", () => handleScreenSizeChange(mediaQuery));
+
+handleScreenSizeChange(mediaQuery);

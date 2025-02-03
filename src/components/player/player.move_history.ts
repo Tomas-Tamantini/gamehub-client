@@ -2,10 +2,10 @@ import { Card } from "../../card";
 import cardToStr from "../card_to_str";
 import Hand from "./hand.model";
 
-export default function moveHistoryComponent(handHistory: Hand[]) {
+export default function moveHistoryComponent(handHistory: Hand[], isMobile: boolean) {
     const div = document.createElement('div');
     div.classList.add('move-history');
-    if (handHistory.length > 1) {
+    if (!isMobile && handHistory.length > 1) {
         const handBeforeLast = handHistory[handHistory.length - 2];
         div.appendChild(moveContainer(handBeforeLast, 'micro'));
     }
