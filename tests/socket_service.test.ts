@@ -24,6 +24,13 @@ describe('SocketService', () => {
         expect(mockWebSocket.send).toHaveBeenCalledWith(JSON.stringify({ message: 'Hello' }));
     });
 
+    it('should callback on connection error', () => {
+        const callback = jest.fn();
+        socketService.onError(callback);
+        mockWebSocket.onerror!({} as Event);
+        expect(callback).toHaveBeenCalled();
+    })
+
     it('should convert camel to snake case when sending', () => {
         socketService.send({ firstKey: { secondKey: "Hello" } });
         expect(mockWebSocket.send).toHaveBeenCalledWith(JSON.stringify({ first_key: { second_key: "Hello" } }));

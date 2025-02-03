@@ -29,10 +29,15 @@ function snakeToCamel(obj: any): any {
 
 export default class SocketService {
     private ws?: WebSocket;
-    private callbackOnMessage?: (data: any) => void;
+    private callbackOnMessage?: (data: object) => void;
+    private callbackOnError?: (e: any) => void;
 
     public onMessage(callback: (data: object) => void) {
         this.callbackOnMessage = callback;
+    }
+
+    public onError(callback: (e: any) => void) {
+        this.callbackOnError = callback;
     }
 
     public send(data: object) {
@@ -52,11 +57,11 @@ export default class SocketService {
                 console.log("Socket closed");
             };
             this.ws.onerror = (error) => {
-                console.log(`Socket error: ${error}`);
+                this.callbackOnError?.(error);
             }
         }
         catch (error) {
-            console.log(`Socket error: ${error}`);
+            this.callbackOnError?.(error);
         }
     }
 }
