@@ -1,9 +1,8 @@
 import { Card } from "./card";
 import {
     ErrorPayload,
+    GameRoomPayload,
     Message,
-    PlayerDisconnectedPayload,
-    PlayerJoinedPayload,
     PrivateView,
     PrivateViewPayload,
     SharedViewPayload
@@ -18,11 +17,8 @@ export default class MessageHandler {
         if (message.messageType === "ERROR") {
             this.handleErrorMessage(message.payload as ErrorPayload);
         }
-        else if (message.messageType === "PLAYER_JOINED") {
-            this.handlePlayerJoined(message.payload as PlayerJoinedPayload);
-        }
-        else if (message.messageType === "PLAYER_DISCONNECTED") {
-            this.handlePlayerDisconnected(message.payload as PlayerDisconnectedPayload);
+        else if (message.messageType === "GAME_ROOM_UPDATE") {
+            this.handleRoomUpdate(message.payload as GameRoomPayload);
         }
         else if (message.messageType === "GAME_STATE") {
             if (message.payload.sharedView) {
@@ -36,21 +32,17 @@ export default class MessageHandler {
         }
     }
 
-    private handlePlayerJoined(payload: PlayerJoinedPayload) {
-        const alertMsg = `Players in room: ${payload.playerIds.join(", ")}`;
-        this.stateStore.update((state) => ({ ...state, alertMsg, roomId: payload.roomId }));
-    }
-
-    private handlePlayerDisconnected(payload: PlayerDisconnectedPayload) {
-        if (this.stateStore.getState().sharedGameState) {
-            const alertMsg = `${payload.disconnectedPlayerId} is offline`;
-            const offlinePlayers = this.stateStore.getState().offlinePlayers || [];
-            this.stateStore.update((state) => ({ ...state, alertMsg, offlinePlayers: [...offlinePlayers, payload.disconnectedPlayerId] }));
+    private handleRoomUpdate(payload: GameRoomPayload) {
+        const roomId = payload.roomId;
+        const offlinePlayers = payload.offlinePlayers;
+        let alertMsg = "";
+        if (!this.stateStore.getState().sharedGameState) {
+            alertMsg = `Players in room: ${payload.playerIds.join(", ")}`;
         }
-        else {
-            const alertMsg = `Players in room: ${payload.room.playerIds.join(", ")}`;
-            this.stateStore.update((state) => ({ ...state, alertMsg }));
+        else if (offlinePlayers.length > 0) {
+            alertMsg = `Offline players: ${offlinePlayers.join(", ")}`;
         }
+        this.stateStore.update((state) => ({ ...state, alertMsg, offlinePlayers, roomId }));
     }
 
     private handleErrorMessage(payload: ErrorPayload) {

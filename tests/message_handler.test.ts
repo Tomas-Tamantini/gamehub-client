@@ -13,12 +13,12 @@ describe('MessageHandler', () => {
         messageHandler = new MessageHandler(stateStore);
     });
 
-    describe('handle PLAYER_JOINED message', () => {
+    describe('handle GAME_ROOM_UPDATE message when player joined', () => {
         let updatedState: GlobalState;
 
         beforeEach(() => {
             const payload = { playerIds: ['player1', 'player2'], roomId: 123 };
-            messageHandler.handle({ messageType: 'PLAYER_JOINED', payload });
+            messageHandler.handle({ messageType: 'GAME_ROOM_UPDATE', payload });
             updatedState = stateStore.getState();
         });
 
@@ -35,12 +35,12 @@ describe('MessageHandler', () => {
         });
     });
 
-    describe('handle PLAYER_DISCONNECTED message before game start', () => {
+    describe('handle GAME_ROOM_UPDATE when player disconnected message before game start', () => {
         let updatedState: GlobalState;
 
         beforeEach(() => {
-            const payload = { room: { playerIds: ['player1', 'player2'] } };
-            messageHandler.handle({ messageType: 'PLAYER_DISCONNECTED', payload });
+            const payload = { playerIds: ['player1', 'player2'] };
+            messageHandler.handle({ messageType: 'GAME_ROOM_UPDATE', payload });
             updatedState = stateStore.getState();
         });
 
@@ -54,19 +54,19 @@ describe('MessageHandler', () => {
         });
     });
 
-    describe('handle PLAYER_DISCONNECTED message after game start', () => {
+    describe('handle GAME_ROOM_UPDATE message when player disconnected after game start', () => {
         let updatedState: GlobalState;
 
         beforeEach(() => {
             const sharedGameState = { status: GameStatus.START_GAME } as SharedGameState
             stateStore.update(() => ({ ...initialState, sharedGameState }));
-            const payload = { disconnectedPlayerId: 'player3' };
-            messageHandler.handle({ messageType: 'PLAYER_DISCONNECTED', payload });
+            const payload = { offlinePlayers: ['player3'] };
+            messageHandler.handle({ messageType: 'GAME_ROOM_UPDATE', payload });
             updatedState = stateStore.getState();
         });
 
         it('should update alert message', () => {
-            expect(updatedState.alertMsg).toEqual('player3 is offline');
+            expect(updatedState.alertMsg).toEqual('Offline players: player3');
         });
 
         it('should update offline players', () => {

@@ -2,18 +2,14 @@ import { Card } from "./card";
 import { SharedGameState, GameStatus } from "./state";
 
 export interface Message {
-    messageType: "ERROR" | "PLAYER_JOINED" | "PLAYER_DISCONNECTED" | "GAME_STATE";
+    messageType: "ERROR" | "GAME_ROOM_UPDATE" | "GAME_STATE";
     payload: any;
 }
 
-export interface PlayerJoinedPayload {
+export interface GameRoomPayload {
     roomId: number;
     playerIds: string[];
-}
-
-export interface PlayerDisconnectedPayload {
-    disconnectedPlayerId: string;
-    room: PlayerJoinedPayload;
+    offlinePlayers: string[];
 }
 
 export interface ErrorPayload {
