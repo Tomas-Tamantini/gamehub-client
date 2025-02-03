@@ -30,7 +30,7 @@ export default class MessageHandler {
                 const payload = message.payload as SharedViewPayload;
                 this.handleSharedGameState(payload.sharedView);
             }
-            else if (message.payload.privateView) {
+            if (message.payload.privateView) {
                 const payload = message.payload as PrivateViewPayload;
                 this.handlePrivateGameState(payload.privateView);
             }
