@@ -1,7 +1,9 @@
 import { Card } from "./card";
+import GameService from "./game_service";
 import {
     ErrorPayload,
     GameRoomPayload,
+    GameRoomsResponsePayload,
     Message,
     PrivateView,
     PrivateViewPayload,
@@ -11,11 +13,14 @@ import { SharedGameState } from "./state";
 import StateStore from "./state_store";
 
 export default class MessageHandler {
-    constructor(private stateStore: StateStore) { }
+    constructor(private stateStore: StateStore, private gameService: GameService) { }
 
     handle(message: Message) {
         if (message.messageType === "ERROR") {
             this.handleErrorMessage(message.payload as ErrorPayload);
+        }
+        else if (message.messageType == "GAME_ROOMS") {
+            this.handleRoomsResponse(message.payload as GameRoomsResponsePayload);
         }
         else if (message.messageType === "GAME_ROOM_UPDATE") {
             this.handleRoomUpdate(message.payload as GameRoomPayload);
@@ -29,6 +34,9 @@ export default class MessageHandler {
                 const payload = message.payload as PrivateViewPayload;
                 this.handlePrivateGameState(payload.privateView);
             }
+        }
+        else {
+            console.error(`Unknown message type: ${message.messageType}: ${JSON.stringify(message.payload)}`);
         }
     }
 
@@ -63,6 +71,18 @@ export default class MessageHandler {
         const previousCards = this.stateStore.getState().myCards || [];
         const sortedCards = serverCards.sort((a, b) => cardIndex(previousCards, a) - cardIndex(previousCards, b));
         this.stateStore.update((state) => ({ ...state, myCards: sortedCards, alertMsg: undefined, selectedCards: [] }));
+    }
+
+    private handleRoomsResponse(payload: GameRoomsResponsePayload) {
+        const nonFullRooms = payload.rooms.filter(room => room.playerIds.length < 4);
+        if (nonFullRooms.length === 0) {
+            // TODO: Implement
+        }
+        else {
+            nonFullRooms.sort((a, b) => b.playerIds.length - a.playerIds.length);
+            const roomId = nonFullRooms[0].roomId;
+            this.gameService.joinGameById(roomId);
+        }
     }
 }
 

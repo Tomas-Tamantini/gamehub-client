@@ -9,17 +9,17 @@ import MessageHandler from "./message_handler";
 import SocketService from "./socket_service";
 import StateStore from "./state_store";
 
-const stateStore = new StateStore();
-const messageHandler = new MessageHandler(stateStore);
-
 const socketService = new SocketService();
+const stateStore = new StateStore();
+const gameService = new GameService(socketService, stateStore);
+const messageHandler = new MessageHandler(stateStore, gameService);
+
 const serverUrl = prompt("Enter server URL", "ws://localhost:8765");
 socketService.connect(serverUrl!);
 socketService.onMessage((message) => { messageHandler.handle(message as Message) });
 socketService.onError(() => { stateStore.update(state => ({ ...state, alertMsg: "Error: Could not connect to server" })) });
 
 
-const gameService = new GameService(socketService, stateStore);
 
 const authComponent = new AuthComponent(stateStore);
 stateStore.subscribe(authComponent);

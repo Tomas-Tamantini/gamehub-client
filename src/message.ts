@@ -2,7 +2,7 @@ import { Card } from "./card";
 import { SharedGameState, GameStatus } from "./state";
 
 export interface Message {
-    messageType: "ERROR" | "GAME_ROOM_UPDATE" | "GAME_STATE";
+    messageType: "ERROR" | "GAME_ROOMS" | "GAME_ROOM_UPDATE" | "GAME_STATE";
     payload: any;
 }
 
@@ -29,4 +29,8 @@ export interface PrivateView {
 export interface PrivateViewPayload {
     roomId: number;
     privateView: PrivateView;
+}
+
+export interface GameRoomsResponsePayload {
+    rooms: GameRoomPayload[];
 }

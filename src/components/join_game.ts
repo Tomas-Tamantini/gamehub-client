@@ -9,7 +9,7 @@ export default class JoinGameComponent {
     }
 
     private onJoinBtnClick() {
-        this.gameService.joinGameByType();
+        this.gameService.queryRooms();
     }
 
     public update(state: GlobalState) {

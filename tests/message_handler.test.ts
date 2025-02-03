@@ -1,16 +1,21 @@
 import MessageHandler from '../src/message_handler';
 import StateStore from '../src/state_store';
 import { GameStatus, GlobalState, SharedGameState } from '../src/state';
+import GameService from '../src/game_service';
+
 
 describe('MessageHandler', () => {
     let stateStore: StateStore;
     let messageHandler: MessageHandler;
     const initialState: GlobalState = { playerId: 'Alice', alertMsg: "Message" };
+    const gameServiceSpy: jest.Mocked<GameService> = {
+        joinGameById: jest.fn()
+    } as unknown as jest.Mocked<GameService>;
 
     beforeEach(() => {
         stateStore = new StateStore();
         stateStore.update(() => initialState);
-        messageHandler = new MessageHandler(stateStore);
+        messageHandler = new MessageHandler(stateStore, gameServiceSpy);
     });
 
     describe('handle GAME_ROOM_UPDATE message when player joined', () => {
@@ -119,5 +124,20 @@ describe('MessageHandler', () => {
             const updatedState = stateStore.getState();
             expect(updatedState.myCards).toEqual(cards);
         })
+    });
+
+    describe('handle GAME_ROOMS message', () => {
+        it('should request to join room with most players less than 4', () => {
+            const payload = {
+                rooms: [
+                    { roomId: 1, playerIds: ['player1', 'player2'] },
+                    { roomId: 2, playerIds: ['player3'] },
+                    { roomId: 3, playerIds: ['player4', 'player5', 'player6'] },
+                    { roomId: 4, playerIds: ['player7', 'player8', 'player9', 'player10'] }
+                ]
+            }
+            messageHandler.handle({ messageType: 'GAME_ROOMS', payload });
+            expect(gameServiceSpy.joinGameById).toHaveBeenCalledWith(3);
+        });
     });
 });

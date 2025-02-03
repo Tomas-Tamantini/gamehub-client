@@ -28,6 +28,30 @@ describe("GameService", () => {
         });
     });
 
+    it("should send a join game request by room id", () => {
+        stateStore.update(() => ({ playerId: "Alice" }));
+
+        gameService.joinGameById(2);
+
+        expect(socketServiceMock.send).toHaveBeenCalledWith({
+            playerId: "Alice",
+            requestType: "JOIN_GAME_BY_ID",
+            payload: { roomId: 2 },
+        });
+    });
+
+    it("should query game rooms", () => {
+        stateStore.update(() => ({ playerId: "Alice" }));
+
+        gameService.queryRooms();
+
+        expect(socketServiceMock.send).toHaveBeenCalledWith({
+            playerId: "Alice",
+            requestType: "QUERY_ROOMS",
+            payload: { gameType: "chinese_poker" },
+        });
+    });
+
     it("should send a make move request with the correct payload", () => {
         const cards: Card[] = [{ rank: 'A', suit: 'd' }];
         stateStore.update(() => ({
