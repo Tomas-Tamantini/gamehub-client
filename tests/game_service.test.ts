@@ -40,6 +40,18 @@ describe("GameService", () => {
         });
     });
 
+    it("should send a rejoin game request by room id", () => {
+        stateStore.update(() => ({ playerId: "Alice" }));
+
+        gameService.rejoinGame(2);
+
+        expect(socketServiceMock.send).toHaveBeenCalledWith({
+            playerId: "Alice",
+            requestType: "REJOIN_GAME",
+            payload: { roomId: 2 },
+        });
+    });
+
     it("should query game rooms", () => {
         stateStore.update(() => ({ playerId: "Alice" }));
 

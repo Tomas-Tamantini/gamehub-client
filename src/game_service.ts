@@ -29,6 +29,14 @@ export default class GameService {
         });
     }
 
+    public rejoinGame(roomId: number) {
+        this.socketService.send({
+            playerId: this.stateStore.getState().playerId,
+            requestType: "REJOIN_GAME",
+            payload: { roomId }
+        });
+    }
+
     public makeMove(cards: Card[]) {
         const { playerId, roomId } = this.stateStore.getState();
         this.socketService.send({

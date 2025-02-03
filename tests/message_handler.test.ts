@@ -9,7 +9,8 @@ describe('MessageHandler', () => {
     let messageHandler: MessageHandler;
     const initialState: GlobalState = { playerId: 'Alice', alertMsg: "Message" };
     const gameServiceSpy: jest.Mocked<GameService> = {
-        joinGameById: jest.fn()
+        joinGameById: jest.fn(),
+        rejoinGame: jest.fn()
     } as unknown as jest.Mocked<GameService>;
 
     beforeEach(() => {
@@ -127,13 +128,25 @@ describe('MessageHandler', () => {
     });
 
     describe('handle GAME_ROOMS message', () => {
+        it('should request to rejoin room if player is offline in it', () => {
+            const payload = {
+                rooms: [
+                    { roomId: 1, playerIds: ['player3'], isFull: false, offlinePlayers: [] },
+                    { roomId: 2, playerIds: ['Alice', 'Bob', 'Charlie', 'Diana'], isFull: true, offlinePlayers: ['Alice'] },
+                ]
+            }
+            messageHandler.handle({ messageType: 'GAME_ROOMS', payload });
+            expect(gameServiceSpy.rejoinGame).toHaveBeenCalledWith(2);
+            expect(gameServiceSpy.joinGameById).not.toHaveBeenCalled();
+        });
+
         it('should request to join non-full room with most players', () => {
             const payload = {
                 rooms: [
-                    { roomId: 1, playerIds: ['player1', 'player2'], isFull: false },
-                    { roomId: 2, playerIds: ['player3'], isFull: false },
-                    { roomId: 3, playerIds: ['player4', 'player5', 'player6'], isFull: false },
-                    { roomId: 4, playerIds: ['player7', 'player8', 'player9', 'player10'], isFull: true },
+                    { roomId: 1, playerIds: ['player1', 'player2'], isFull: false, offlinePlayers: [] },
+                    { roomId: 2, playerIds: ['player3'], isFull: false, offlinePlayers: [] },
+                    { roomId: 3, playerIds: ['player4', 'player5', 'player6'], isFull: false, offlinePlayers: [] },
+                    { roomId: 4, playerIds: ['player7', 'player8', 'player9', 'player10'], isFull: true, offlinePlayers: [] },
                 ]
             }
             messageHandler.handle({ messageType: 'GAME_ROOMS', payload });
@@ -143,7 +156,7 @@ describe('MessageHandler', () => {
         it('should alert if no room that is not full', () => {
             const payload = {
                 rooms: [
-                    { roomId: 1, playerIds: ['player1', 'player2', 'player3', 'player4'], isFull: true },
+                    { roomId: 1, playerIds: ['player1', 'player2', 'player3', 'player4'], isFull: true, offlinePlayers: [] },
                 ]
             }
             messageHandler.handle({ messageType: 'GAME_ROOMS', payload });
