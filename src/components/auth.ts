@@ -14,17 +14,12 @@ export default class AuthComponent {
             this.playerIdSpan.innerText = state.playerId ? state.playerId : "";
         }
         if (this.authBtn) {
-            this.authBtn.innerText = state.playerId ? "Logout" : "Login";
+            this.authBtn.style.display = state.playerId ? "none" : "block";
         }
     }
 
     private onAuthBtnClick() {
-        if (this.stateStore.getState().playerId) {
-            this.stateStore.update(
-                (state: GlobalState) => ({ ...state, playerId: "" })
-            )
-        }
-        else {
+        if (!this.stateStore.getState().playerId) {
             const playerId = prompt("Enter your player ID");
             if (playerId) {
                 this.stateStore.update(
