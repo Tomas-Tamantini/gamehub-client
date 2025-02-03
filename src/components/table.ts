@@ -9,8 +9,9 @@ export default class TableComponent {
     constructor(private stateStore: StateStore) { }
 
     private reset() {
-        while (this.table?.firstChild) {
-            this.table.removeChild(this.table.firstChild);
+        const players = this.table?.getElementsByClassName('player');
+        while (players?.length) {
+            players[0].remove();
         }
     }
 

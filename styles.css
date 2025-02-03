@@ -24,6 +24,7 @@ footer {
 
 span {
     text-align: center;
+    user-select: none;
 }
 
 span.offline {
@@ -361,4 +362,9 @@ button:active {
 
 .icon-btn:active {
     background-color: rgba(0, 0, 0, 0.2);
+}
+
+.center-icon {
+    font-size: xx-large;
+    user-select: none;
 }
