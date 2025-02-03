@@ -40,7 +40,7 @@ function handleScreenSizeChange(e: MediaQueryList) {
     stateStore.update(state => ({ ...state, isMobile: e.matches }));
 }
 
-const mediaQuery = window.matchMedia("(max-width: 600px)");
+const mediaQuery = window.matchMedia("(max-width: 600px), (max-height: 620px)");
 mediaQuery.addEventListener("change", () => handleScreenSizeChange(mediaQuery));
 
 handleScreenSizeChange(mediaQuery);
