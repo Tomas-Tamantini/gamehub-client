@@ -5,7 +5,7 @@ import StateStore from "./state_store";
 export default class GameService {
     constructor(private socketService: SocketService, private stateStore: StateStore) { }
 
-    public joinGame() {
+    public joinGameByType() {
         this.socketService.send({
             playerId: this.stateStore.getState().playerId,
             requestType: "JOIN_GAME_BY_TYPE",

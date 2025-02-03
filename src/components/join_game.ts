@@ -9,7 +9,7 @@ export default class JoinGameComponent {
     }
 
     private onJoinBtnClick() {
-        this.gameService.joinGame();
+        this.gameService.joinGameByType();
     }
 
     public update(state: GlobalState) {

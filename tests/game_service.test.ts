@@ -16,10 +16,10 @@ describe("GameService", () => {
         gameService = new GameService(socketServiceMock, stateStore);
     });
 
-    it("should send a join game request with the correct payload", () => {
+    it("should send a join game request by game type", () => {
         stateStore.update(() => ({ playerId: "Alice" }));
 
-        gameService.joinGame();
+        gameService.joinGameByType();
 
         expect(socketServiceMock.send).toHaveBeenCalledWith({
             playerId: "Alice",
