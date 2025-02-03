@@ -74,9 +74,9 @@ export default class MessageHandler {
     }
 
     private handleRoomsResponse(payload: GameRoomsResponsePayload) {
-        const nonFullRooms = payload.rooms.filter(room => room.playerIds.length < 4);
+        const nonFullRooms = payload.rooms.filter(room => !room.isFull);
         if (nonFullRooms.length === 0) {
-            // TODO: Implement
+            this.stateStore.update((state) => ({ ...state, alertMsg: "No rooms available" }));
         }
         else {
             nonFullRooms.sort((a, b) => b.playerIds.length - a.playerIds.length);

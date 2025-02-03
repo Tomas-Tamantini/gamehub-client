@@ -127,17 +127,28 @@ describe('MessageHandler', () => {
     });
 
     describe('handle GAME_ROOMS message', () => {
-        it('should request to join room with most players less than 4', () => {
+        it('should request to join non-full room with most players', () => {
             const payload = {
                 rooms: [
-                    { roomId: 1, playerIds: ['player1', 'player2'] },
-                    { roomId: 2, playerIds: ['player3'] },
-                    { roomId: 3, playerIds: ['player4', 'player5', 'player6'] },
-                    { roomId: 4, playerIds: ['player7', 'player8', 'player9', 'player10'] }
+                    { roomId: 1, playerIds: ['player1', 'player2'], isFull: false },
+                    { roomId: 2, playerIds: ['player3'], isFull: false },
+                    { roomId: 3, playerIds: ['player4', 'player5', 'player6'], isFull: false },
+                    { roomId: 4, playerIds: ['player7', 'player8', 'player9', 'player10'], isFull: true },
                 ]
             }
             messageHandler.handle({ messageType: 'GAME_ROOMS', payload });
             expect(gameServiceSpy.joinGameById).toHaveBeenCalledWith(3);
+        });
+
+        it('should alert if no room that is not full', () => {
+            const payload = {
+                rooms: [
+                    { roomId: 1, playerIds: ['player1', 'player2', 'player3', 'player4'], isFull: true },
+                ]
+            }
+            messageHandler.handle({ messageType: 'GAME_ROOMS', payload });
+            const updatedState = stateStore.getState();
+            expect(updatedState.alertMsg).toEqual('No rooms available');
         });
     });
 });

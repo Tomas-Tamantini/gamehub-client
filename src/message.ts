@@ -10,6 +10,7 @@ export interface GameRoomPayload {
     roomId: number;
     playerIds: string[];
     offlinePlayers: string[];
+    isFull: boolean;
 }
 
 export interface ErrorPayload {
