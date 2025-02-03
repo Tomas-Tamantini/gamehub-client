@@ -1,6 +1,6 @@
 import MessageHandler from '../src/message_handler';
 import StateStore from '../src/state_store';
-import { GlobalState } from '../src/state';
+import { GameStatus, GlobalState, SharedGameState } from '../src/state';
 
 describe('MessageHandler', () => {
     let stateStore: StateStore;
@@ -9,7 +9,7 @@ describe('MessageHandler', () => {
 
     beforeEach(() => {
         stateStore = new StateStore();
-        stateStore.update(() => (initialState));
+        stateStore.update(() => initialState);
         messageHandler = new MessageHandler(stateStore);
     });
 
@@ -35,7 +35,7 @@ describe('MessageHandler', () => {
         });
     });
 
-    describe('handle PLAYER_DISCONNECTED message', () => {
+    describe('handle PLAYER_DISCONNECTED message before game start', () => {
         let updatedState: GlobalState;
 
         beforeEach(() => {
@@ -47,6 +47,32 @@ describe('MessageHandler', () => {
         it('should update alert message', () => {
             expect(updatedState.alertMsg).toEqual('Players in room: player1, player2');
         });
+
+
+        it('should preserve rest of the state', () => {
+            expect(updatedState.playerId).toEqual('Alice');
+        });
+    });
+
+    describe('handle PLAYER_DISCONNECTED message after game start', () => {
+        let updatedState: GlobalState;
+
+        beforeEach(() => {
+            const sharedGameState = { status: GameStatus.START_GAME } as SharedGameState
+            stateStore.update(() => ({ ...initialState, sharedGameState }));
+            const payload = { disconnectedPlayerId: 'player3' };
+            messageHandler.handle({ messageType: 'PLAYER_DISCONNECTED', payload });
+            updatedState = stateStore.getState();
+        });
+
+        it('should update alert message', () => {
+            expect(updatedState.alertMsg).toEqual('player3 is offline');
+        });
+
+        it('should update offline players', () => {
+            expect(updatedState.offlinePlayers).toEqual(['player3']);
+        })
+
 
         it('should preserve rest of the state', () => {
             expect(updatedState.playerId).toEqual('Alice');

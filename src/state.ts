@@ -50,4 +50,5 @@ export interface GlobalState {
     myCards?: Card[];
     selectedCards?: Card[];
     isMobile?: boolean;
+    offlinePlayers?: string[];
 }

@@ -42,8 +42,15 @@ export default class MessageHandler {
     }
 
     private handlePlayerDisconnected(payload: PlayerDisconnectedPayload) {
-        const alertMsg = `Players in room: ${payload.room.playerIds.join(", ")}`;
-        this.stateStore.update((state) => ({ ...state, alertMsg }));
+        if (this.stateStore.getState().sharedGameState) {
+            const alertMsg = `${payload.disconnectedPlayerId} is offline`;
+            const offlinePlayers = this.stateStore.getState().offlinePlayers || [];
+            this.stateStore.update((state) => ({ ...state, alertMsg, offlinePlayers: [...offlinePlayers, payload.disconnectedPlayerId] }));
+        }
+        else {
+            const alertMsg = `Players in room: ${payload.room.playerIds.join(", ")}`;
+            this.stateStore.update((state) => ({ ...state, alertMsg }));
+        }
     }
 
     private handleErrorMessage(payload: ErrorPayload) {
