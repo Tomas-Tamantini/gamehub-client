@@ -35,3 +35,7 @@ export interface PrivateViewPayload {
 export interface GameRoomsResponsePayload {
     rooms: GameRoomPayload[];
 }
+
+export interface GameRoomsResponse {
+    items: GameRoomPayload[];
+}
