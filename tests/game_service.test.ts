@@ -1,10 +1,12 @@
 import { Card } from "../src/card";
 import GameService from "../src/game_service";
+import HttpService from "../src/http_service";
 import SocketService from "../src/socket_service";
 import StateStore from "../src/state_store";
 
 describe("GameService", () => {
     let socketServiceMock: jest.Mocked<SocketService>;
+    let httpServiceMock: HttpService;
     let stateStore: StateStore;
     let gameService: GameService;
 
@@ -12,20 +14,11 @@ describe("GameService", () => {
         socketServiceMock = {
             send: jest.fn(),
         } as unknown as jest.Mocked<SocketService>;
+        httpServiceMock = {
+            getRooms: jest.fn(),
+        } as unknown as HttpService;
         stateStore = new StateStore();
-        gameService = new GameService(socketServiceMock, stateStore);
-    });
-
-    it("should send a join game request by game type", () => {
-        stateStore.update(() => ({ playerId: "Alice" }));
-
-        gameService.joinGameByType();
-
-        expect(socketServiceMock.send).toHaveBeenCalledWith({
-            playerId: "Alice",
-            requestType: "JOIN_GAME_BY_TYPE",
-            payload: { gameType: "chinese_poker" },
-        });
+        gameService = new GameService(socketServiceMock, httpServiceMock, stateStore);
     });
 
     it("should send a join game request by room id", () => {
@@ -76,5 +69,11 @@ describe("GameService", () => {
             requestType: "MAKE_MOVE",
             payload: { roomId: 123, move: { cards } },
         });
+    });
+
+    it("should query rooms before joining", () => {
+        stateStore.update(() => ({ playerId: "Alice" }));
+        gameService.joinGame();
+        expect(httpServiceMock.getRooms).toHaveBeenCalled();
     });
 });

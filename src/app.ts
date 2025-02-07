@@ -4,17 +4,20 @@ import AuthComponent from "./components/auth";
 import JoinGameComponent from "./components/join_game";
 import TableComponent from "./components/table";
 import GameService from "./game_service";
+import HttpService from "./http_service";
 import { Message } from "./message";
 import MessageHandler from "./message_handler";
 import SocketService from "./socket_service";
 import StateStore from "./state_store";
 
+const serverUrl = prompt("Enter server URL", "ws://localhost:8000");
+
+const httpService = new HttpService(serverUrl!.replace("ws", "http"));
 const socketService = new SocketService();
 const stateStore = new StateStore();
-const gameService = new GameService(socketService, stateStore);
+const gameService = new GameService(socketService, httpService, stateStore);
 const messageHandler = new MessageHandler(stateStore, gameService);
 
-const serverUrl = prompt("Enter server URL", "ws://localhost:8000");
 socketService.connect(serverUrl! + "/ws");
 socketService.onMessage((message) => { messageHandler.handle(message as Message) });
 socketService.onError(() => { stateStore.update(state => ({ ...state, alertMsg: "Error: Could not connect to server" })) });
