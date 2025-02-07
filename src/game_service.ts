@@ -12,15 +12,6 @@ export default class GameService {
         private stateStore: StateStore
     ) { }
 
-    public queryRooms() {
-        // TODO: Delete this method
-        this.socketService.send({
-            playerId: this.stateStore.getState().playerId,
-            requestType: "QUERY_ROOMS",
-            payload: { gameType: "chinese_poker" }
-        });
-    }
-
     public joinGameById(roomId: number) {
         this.socketService.send({
             playerId: this.stateStore.getState().playerId,

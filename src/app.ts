@@ -16,7 +16,7 @@ const httpService = new HttpService(serverUrl!.replace("ws", "http"));
 const socketService = new SocketService();
 const stateStore = new StateStore();
 const gameService = new GameService(socketService, httpService, stateStore);
-const messageHandler = new MessageHandler(stateStore, gameService);
+const messageHandler = new MessageHandler(stateStore);
 
 socketService.connect(serverUrl! + "/ws");
 socketService.onMessage((message) => { messageHandler.handle(message as Message) });

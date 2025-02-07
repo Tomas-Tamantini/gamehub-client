@@ -1,22 +1,17 @@
 import MessageHandler from '../src/message_handler';
 import StateStore from '../src/state_store';
 import { GameStatus, GlobalState, SharedGameState } from '../src/state';
-import GameService from '../src/game_service';
 
 
 describe('MessageHandler', () => {
     let stateStore: StateStore;
     let messageHandler: MessageHandler;
     const initialState: GlobalState = { playerId: 'Alice', alertMsg: "Message" };
-    const gameServiceSpy: jest.Mocked<GameService> = {
-        joinGameById: jest.fn(),
-        rejoinGame: jest.fn()
-    } as unknown as jest.Mocked<GameService>;
 
     beforeEach(() => {
         stateStore = new StateStore();
         stateStore.update(() => initialState);
-        messageHandler = new MessageHandler(stateStore, gameServiceSpy);
+        messageHandler = new MessageHandler(stateStore);
     });
 
     describe('handle GAME_ROOM_UPDATE message when player joined', () => {

@@ -1,27 +1,21 @@
 import { Card } from "./card";
-import GameService from "./game_service";
 import {
     ErrorPayload,
     GameRoomPayload,
-    GameRoomsResponsePayload,
     Message,
     PrivateView,
     PrivateViewPayload,
     SharedViewPayload
 } from "./message";
-import { roomToJoin, roomToRejoin } from "./room_picker";
 import { SharedGameState } from "./state";
 import StateStore from "./state_store";
 
 export default class MessageHandler {
-    constructor(private stateStore: StateStore, private gameService: GameService) { }
+    constructor(private stateStore: StateStore) { }
 
     handle(message: Message) {
         if (message.messageType === "ERROR") {
             this.handleErrorMessage(message.payload as ErrorPayload);
-        }
-        else if (message.messageType == "GAME_ROOMS") {
-            this.handleRoomsResponse(message.payload as GameRoomsResponsePayload);
         }
         else if (message.messageType === "GAME_ROOM_UPDATE") {
             this.handleRoomUpdate(message.payload as GameRoomPayload);
@@ -72,15 +66,6 @@ export default class MessageHandler {
         const previousCards = this.stateStore.getState().myCards || [];
         const sortedCards = serverCards.sort((a, b) => cardIndex(previousCards, a) - cardIndex(previousCards, b));
         this.stateStore.update((state) => ({ ...state, myCards: sortedCards, alertMsg: undefined, selectedCards: [] }));
-    }
-
-    private handleRoomsResponse(payload: GameRoomsResponsePayload) {
-        const playerId = this.stateStore.getState().playerId;
-        const rejoin = roomToRejoin(playerId, payload.rooms);
-        const join = roomToJoin(payload.rooms);
-        if (rejoin) this.gameService.rejoinGame(rejoin.roomId);
-        else if (join) this.gameService.joinGameById(join.roomId);
-        else this.stateStore.update((state) => ({ ...state, alertMsg: "No rooms available" }));
     }
 }
 
