@@ -15,7 +15,7 @@ const gameService = new GameService(socketService, stateStore);
 const messageHandler = new MessageHandler(stateStore, gameService);
 
 const serverUrl = prompt("Enter server URL", "ws://localhost:8000");
-socketService.connect(serverUrl!);
+socketService.connect(serverUrl! + "/ws");
 socketService.onMessage((message) => { messageHandler.handle(message as Message) });
 socketService.onError(() => { stateStore.update(state => ({ ...state, alertMsg: "Error: Could not connect to server" })) });
 
