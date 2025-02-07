@@ -25,12 +25,8 @@ describe("HttpService", () => {
         expect(fetch).toHaveBeenCalledWith(`${mockUrl}/rooms?game_type=chinese_poker`);
     });
 
-    it("should invoke the callback with parsed JSON data", async () => {
-        const mockResponse: GameRoomsResponse = {
-            items: [
-                { roomId: 1, playerIds: ["A", "B"], offlinePlayers: [], isFull: false },
-            ]
-        };
+    it("should convert server snake_case to camelCase", async () => {
+        const mockResponse = { "items": [{ "room_id": 1, "player_ids": ["A", "B"], "offline_players": [], "is_full": false }] };
 
         (fetch as jest.Mock).mockResolvedValue({
             json: jest.fn().mockResolvedValue(mockResponse),
@@ -41,6 +37,10 @@ describe("HttpService", () => {
 
         await new Promise(setImmediate);
 
-        expect(callback).toHaveBeenCalledWith(mockResponse);
+        expect(callback).toHaveBeenCalledWith({
+            items: [
+                { roomId: 1, playerIds: ["A", "B"], offlinePlayers: [], isFull: false },
+            ]
+        });
     });
 });
