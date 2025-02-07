@@ -22,7 +22,7 @@ describe("HttpService", () => {
 
         await new Promise(setImmediate);
 
-        expect(fetch).toHaveBeenCalledWith(`${mockUrl}/rooms?game_type=chinese_poker`);
+        expect(fetch).toHaveBeenCalledWith(`${mockUrl}/rooms?game_type=chinese_poker`, { "headers": { "ngrok-skip-browser-warning": "true" } });
     });
 
     it("should convert server snake_case to camelCase", async () => {
