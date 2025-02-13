@@ -22,24 +22,18 @@ describe("GameService", () => {
     });
 
     it("should send a join game request by room id", () => {
-        stateStore.update(() => ({ playerId: "Alice" }));
-
         gameService.joinGameById(2);
 
         expect(socketServiceMock.send).toHaveBeenCalledWith({
-            playerId: "Alice",
             requestType: "JOIN_GAME_BY_ID",
             payload: { roomId: 2 },
         });
     });
 
     it("should send a rejoin game request by room id", () => {
-        stateStore.update(() => ({ playerId: "Alice" }));
-
         gameService.rejoinGame(2);
 
         expect(socketServiceMock.send).toHaveBeenCalledWith({
-            playerId: "Alice",
             requestType: "REJOIN_GAME",
             payload: { roomId: 2 },
         });
@@ -48,19 +42,16 @@ describe("GameService", () => {
     it("should send a make move request with the correct payload", () => {
         const cards: Card[] = [{ rank: 'A', suit: 'd' }];
         stateStore.update(() => ({
-            playerId: "Alice",
             roomId: 123
         }))
         gameService.makeMove(cards);
         expect(socketServiceMock.send).toHaveBeenCalledWith({
-            playerId: "Alice",
             requestType: "MAKE_MOVE",
             payload: { roomId: 123, move: { cards } },
         });
     });
 
     it("should query rooms before joining", () => {
-        stateStore.update(() => ({ playerId: "Alice" }));
         gameService.joinGame();
         expect(httpServiceMock.getRooms).toHaveBeenCalled();
     });

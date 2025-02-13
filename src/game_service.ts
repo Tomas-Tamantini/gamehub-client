@@ -14,7 +14,6 @@ export default class GameService {
 
     public joinGameById(roomId: number) {
         this.socketService.send({
-            playerId: this.stateStore.getState().playerId,
             requestType: "JOIN_GAME_BY_ID",
             payload: { roomId }
         });
@@ -22,16 +21,14 @@ export default class GameService {
 
     public rejoinGame(roomId: number) {
         this.socketService.send({
-            playerId: this.stateStore.getState().playerId,
             requestType: "REJOIN_GAME",
             payload: { roomId }
         });
     }
 
     public makeMove(cards: Card[]) {
-        const { playerId, roomId } = this.stateStore.getState();
+        const { roomId } = this.stateStore.getState();
         this.socketService.send({
-            playerId,
             requestType: "MAKE_MOVE",
             payload: { roomId, move: { cards } }
         });
