@@ -5,6 +5,8 @@ export default class SocketService {
     private callbackOnMessage?: (data: object) => void;
     private callbackOnError?: (e: any) => void;
 
+    constructor(private url: string) { }
+
     public onMessage(callback: (data: object) => void) {
         this.callbackOnMessage = callback;
     }
@@ -17,9 +19,10 @@ export default class SocketService {
         this.ws?.send(JSON.stringify(camelToSnake(data)));
     }
 
-    public connect(url: string) {
+    public connect(playerId: string) {
+        const fullUrl = this.url + "?player_id=" + playerId;
         try {
-            this.ws = new WebSocket(url);
+            this.ws = new WebSocket(fullUrl);
             this.ws.onopen = () => {
                 console.log("Socket connected");
             };

@@ -5,18 +5,17 @@ describe('SocketService', () => {
     let mockWebSocket: jest.Mocked<WebSocket>;
 
     beforeEach(() => {
-        socketService = new SocketService();
         mockWebSocket = {
             onmessage: jest.fn(),
             send: jest.fn(),
         } as any;
         global.WebSocket = jest.fn(() => mockWebSocket) as any;
-        socketService = new SocketService();
-        socketService.connect('ws://localhost:3000');
+        socketService = new SocketService('ws://localhost:3000/ws');
+        socketService.connect("testPlayerId");
     });
 
-    it('should connect to the given url', () => {
-        expect(global.WebSocket).toHaveBeenCalledWith('ws://localhost:3000');
+    it('should connect to the given url with proper player id', () => {
+        expect(global.WebSocket).toHaveBeenCalledWith('ws://localhost:3000/ws?player_id=testPlayerId');
     });
 
     it('should send message to given url', () => {

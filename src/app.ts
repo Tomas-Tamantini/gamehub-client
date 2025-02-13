@@ -12,19 +12,19 @@ import StateStore from "./state_store";
 
 const serverUrl = prompt("Enter server URL", "ws://localhost:8000");
 
-const httpService = new HttpService(serverUrl!.replace("ws", "http"));
-const socketService = new SocketService();
+const trimmedServerUrl = serverUrl!.trim();
+const httpService = new HttpService(trimmedServerUrl.replace("ws", "http"));
+const socketService = new SocketService(trimmedServerUrl + "/ws");
 const stateStore = new StateStore();
 const gameService = new GameService(socketService, httpService, stateStore);
 const messageHandler = new MessageHandler(stateStore);
 
-socketService.connect(serverUrl! + "/ws");
 socketService.onMessage((message) => { messageHandler.handle(message as Message) });
 socketService.onError(() => { stateStore.update(state => ({ ...state, alertMsg: "Error: Could not connect to server" })) });
 
 
 
-const authComponent = new AuthComponent(stateStore);
+const authComponent = new AuthComponent(stateStore, socketService);
 stateStore.subscribe(authComponent);
 
 const joinGameComponent = new JoinGameComponent(gameService);

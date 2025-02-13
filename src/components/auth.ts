@@ -1,3 +1,4 @@
+import SocketService from "../socket_service";
 import { GlobalState } from "../state";
 import StateStore from "../state_store";
 
@@ -5,7 +6,7 @@ export default class AuthComponent {
     private authBtn = document.getElementById('auth-btn');
     private playerIdSpan = document.getElementById('player-id');
 
-    constructor(private stateStore: StateStore) {
+    constructor(private stateStore: StateStore, private socketService: SocketService) {
         this.authBtn?.addEventListener('click', this.onAuthBtnClick.bind(this));
     }
 
@@ -22,8 +23,10 @@ export default class AuthComponent {
         if (!this.stateStore.getState().playerId) {
             const playerId = prompt("Enter your player ID");
             if (playerId) {
+                const trimmedPlayerId = playerId.trim();
+                this.socketService.connect(trimmedPlayerId);
                 this.stateStore.update(
-                    (state: GlobalState) => ({ ...state, playerId })
+                    (state: GlobalState) => ({ ...state, playerId: trimmedPlayerId })
                 )
             }
         }
