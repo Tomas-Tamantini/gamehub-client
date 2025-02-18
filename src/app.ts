@@ -10,11 +10,14 @@ import MessageHandler from "./message_handler";
 import SocketService from "./socket_service";
 import StateStore from "./state_store";
 
-const serverUrl = prompt("Enter server URL", "ws://localhost:8000");
 
-const trimmedServerUrl = serverUrl!.trim();
-const httpService = new HttpService(trimmedServerUrl.replace("ws", "http"));
-const socketService = new SocketService(trimmedServerUrl + "/ws");
+const isDev = location.hostname === 'localhost' || location.hostname === '127.0.0.1';
+const serverUrl = isDev
+    ? 'ws://localhost:8000'
+    : 'https://gamehub-server.fly.dev';
+
+const httpService = new HttpService(serverUrl.replace("ws", "http"));
+const socketService = new SocketService(serverUrl + "/ws");
 const stateStore = new StateStore();
 const gameService = new GameService(socketService, httpService, stateStore);
 const messageHandler = new MessageHandler(stateStore);
