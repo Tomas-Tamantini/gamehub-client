@@ -11,7 +11,7 @@ export default class HttpService {
 
     public getRooms(callback: (rooms: GameRoomsResponse) => void) {
         const queryParameters = new URLSearchParams({ game_type: 'chinese_poker' })
-        const endpoint = `${this.url}/rooms?${queryParameters.toString()}`;
+        const endpoint = `${this.url}/rooms/?${queryParameters.toString()}`;
         fetch(endpoint, { headers: this.getHeaders() })
             .then((response) => response.json())
             .then((data) => callback(snakeToCamel(data) as GameRoomsResponse));
